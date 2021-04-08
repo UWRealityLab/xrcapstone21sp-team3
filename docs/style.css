@@ -15,7 +15,7 @@
 #cd-vertical-nav {
   position: fixed;
   /*z-index: 1;*/
-  right: 5%;
+  right: 10%;
   bottom: 50%;
   /*width: 90%;*/
   /*max-width: 400px;*/
@@ -43,11 +43,11 @@
 #cd-vertical-nav a span {
   float: right;
   display: inline-block;
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  -ms-transform: scale(1);
-  -o-transform: scale(1);
-  transform: scale(1);
+  -webkit-transform: scale(2);
+  -moz-transform: scale(2);
+  -ms-transform: scale(2);
+  -o-transform: scale(2);
+  transform: scale(2);
 }
 #cd-vertical-nav a:link {
   color: black;
@@ -57,11 +57,11 @@
   color: black;
 }
 #cd-vertical-nav a:hover span {
-  -webkit-transform: scale(1.5);
-  -moz-transform: scale(1.5);
-  -ms-transform: scale(1.5);
-  -o-transform: scale(1.5);
-  transform: scale(1.5);
+  -webkit-transform: scale(2.1);
+  -moz-transform: scale(2.1);
+  -ms-transform: scale(2.1);
+  -o-transform: scale(2.1);
+  transform: scale(2.1);
   color: rgb(99, 165, 42);
 }
 #cd-vertical-nav .cd-dot {

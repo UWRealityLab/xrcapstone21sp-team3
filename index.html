@@ -54,11 +54,7 @@
                 </a-entity>
             </template>
 
-            <a-entity id="rig" position="0 0 0">
-                <a-entity id="camera" camera look-controls wasd-controls></a-entity>
-            </a-entity>
-
-            <!--
+           
             <a-entity
                 id="camera"
                 navigator="cameraRig: #camera; cameraHead: #head; collisionEntities: .collision; ignoreEntities: .clickable"
@@ -77,7 +73,7 @@
                     id="rightHand"
                     super-hands
                     hand-controls="hand: right; handModelStyle: highPoly; color: #afafaf"
-                    sphere-collider="objects: {a-sphere, a-box}"
+                    sphere-collider="objects: a-sphere, a-box"
                     visible="true"
                     raycaster="objects: .clickable"
                     static-body="shape: sphere; sphereRadius: 0.02"
@@ -88,7 +84,7 @@
                     id="leftHand"
                     super-hands
                     hand-controls="hand: left; handModelStyle: highPoly; color: #afafaf"
-                    sphere-collider="objects: {a-sphere, a-box}"
+                    sphere-collider="objects: a-sphere, a-box"
                     teleport-controls="cameraRig: #camera; teleportOrigin: #head; button: trigger; hitCylinderColor: #7a96ea; curveHitColor: #7a96ea; curveNumberPoints: 5000; curveShootingSpeed:18; landingMaxAngle: 60"
                     visible="true"
                     raycaster="objects: .clickable"
@@ -96,7 +92,6 @@
                     physics-collider
                 ></a-entity>
             </a-entity>
-            -->
 
             <!-- SCENE -->
 

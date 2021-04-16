@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>Event Horizon</title>
+
+        <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+        <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.1/dist/aframe-extras.min.js"></script>
+        <script src="scripts/color-changer.js"></script>
+        <script src="scripts/button-press.js"></script>
+        <script src="scripts/rotate.js"></script>
+    
+        <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+        <script src="https://unpkg.com/aframe-physics-extras/dist/aframe-physics-extras.min.js"></script>
+        <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
+    
+        <!-- https://croquet.studio/sdk/docs/index.html -->
+        <script src="https://unpkg.com/@croquet/croquet@0.4.0"></script>
+    
+        <!-- https://croquet.studio/sdk/docs/global.html#Constants -->
+        <script src="thirdparty/constants.js"></script>
+    
+        <!-- Here we register the croquet system/component immediately before the scene loads -->
+        <script src="thirdparty/system.js"></script>
+        <script src="thirdparty/component.js"></script>
+    
+        <!-- Modules are loaded after the document (and therefore A-Frame scene) loads  -->
+        <script src="thirdparty/index.js" type="module"></script>
+    </head>
+    <body>
+        <a-scene physics="gravity:-1.62" cursor="rayOrigin: mouse" croquet>
+            <a-assets>
+                <img id="sky-box" src="assets/space.jpg"></img>
+                <a-asset-item id="corridor" src="assets/corridor.glb"></a-asset-item>
+            </a-assets>
+
+            <!-- PLAYER -->
+
+            <template id="userTemplate">
+                <a-entity class="user">
+                  <a-gltf-model
+                    src="https://cdn.glitch.com/ebbea273-4dc0-4e45-98a9-1e7536d9ffeb%2FCesiumMan.gltf?v=1618458256256"
+                    id="cameraHead"
+                    class="head"
+                    scale="1.3 1.3 1.3"
+                    position="0 -1.7 0"
+                    rotation="-10 180 0"
+                  ></a-gltf-model>
+                </a-entity>
+            </template>
+
+            <a-entity id="rig" position="0 0 0">
+                <a-entity id="camera" camera look-controls wasd-controls></a-entity>
+            </a-entity>
+
+            <!--
+            <a-entity
+                id="camera"
+                navigator="cameraRig: #camera; cameraHead: #head; collisionEntities: .collision; ignoreEntities: .clickable"
+                position="0 0 0"
+                rotation="0 0 0"
+                movement-controls
+            >
+                <a-entity
+                    id="head"
+                    camera="active: true"
+                    position="0 1 0"
+                    look-controls
+                ></a-entity>
+    
+                <a-entity
+                    id="rightHand"
+                    super-hands
+                    hand-controls="hand: right; handModelStyle: highPoly; color: #afafaf"
+                    sphere-collider="objects: {a-sphere, a-box}"
+                    visible="true"
+                    raycaster="objects: .clickable"
+                    static-body="shape: sphere; sphereRadius: 0.02"
+                    physics-collider
+                ></a-entity>
+    
+                <a-entity
+                    id="leftHand"
+                    super-hands
+                    hand-controls="hand: left; handModelStyle: highPoly; color: #afafaf"
+                    sphere-collider="objects: {a-sphere, a-box}"
+                    teleport-controls="cameraRig: #camera; teleportOrigin: #head; button: trigger; hitCylinderColor: #7a96ea; curveHitColor: #7a96ea; curveNumberPoints: 5000; curveShootingSpeed:18; landingMaxAngle: 60"
+                    visible="true"
+                    raycaster="objects: .clickable"
+                    static-body="shape: sphere; sphereRadius: 0.02"
+                    physics-collider
+                ></a-entity>
+            </a-entity>
+            -->
+
+            <!-- SCENE -->
+
+            <a-sky croquet="name: sky;" src="#sky-box"></a-sky>
+            
+            <a-light
+                croquet="name: aLight"
+                type="ambient"
+                color="#BBB"
+            ></a-light>
+            <a-light
+                croquet="name: dLight"
+                type="directional"
+                color="#FFF"
+                intensity="0.6"
+                castShadow="true"
+                position="-0.5 1 1"
+            ></a-light>
+            
+            <a-gltf-model 
+                croquet="name: corridor;"
+                position="0 1.8 0" 
+                src="#corridor" 
+                rotate
+            >
+                <!-- invisible floor -->  
+                <a-plane
+                    croquet="name: plane;"
+                    id="floor"
+                    position="0 -2 0"
+                    rotation="-90 0 0"
+                    width="39.9"
+                    height="6"
+                    material="opacity:0"
+                    static-body
+                ></a-plane>
+                <a-box
+                    croquet="name: box;"
+                    static-body
+                    position="-3 -0.5 -3.3"
+                    depth="0.1"
+                    height="0.3"
+                    width="0.3"
+                    color="#4CC3D9"
+                    clickable
+                    button-press
+                ></a-box>
+                <a-sphere
+                    croquet="name: sphere;"
+                    grabbable
+                    stretchable
+                    dynamic-body
+                    position="0 -1 -0.5"
+                    radius="0.1"
+                    color-changer
+                ></a-sphere>
+            </a-gltf-model>
+        </a-scene>
+    </body>
+
+    <script src="thirdparty/randomizeLocation.js"></script>
+</html>

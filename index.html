@@ -37,6 +37,8 @@
             <a-assets>
                 <img id="sky-box" src="assets/space.jpg"></img>
                 <a-asset-item id="corridor" src="assets/corridor.glb"></a-asset-item>
+                <a-asset-item id="map" src="assets/map.glb"></a-asset-item>
+                <a-asset-item id="terminal" src="assets/terminal.glb"></a-asset-item>
             </a-assets>
 
             <!-- PLAYER -->
@@ -111,13 +113,17 @@
                 position="-0.5 1 1"
             ></a-light>
             
+            <a-gltf-model src="#map" position="0 0 0" rotation="0 90 0">
+                <a-gltf-model src="#terminal" position="0 0 19" scale="0.01 0.01 0.01"></a-gltf-model>
+            </a-gltf-model>
+
+            <!--
             <a-gltf-model 
                 croquet="name: corridor;"
                 position="0 1.8 0" 
                 src="#corridor" 
                 rotate
             >
-                <!-- invisible floor -->  
                 <a-plane
                     croquet="name: plane;"
                     id="floor"
@@ -149,6 +155,7 @@
                     color-changer
                 ></a-sphere>
             </a-gltf-model>
+            -->
         </a-scene>
     </body>
 

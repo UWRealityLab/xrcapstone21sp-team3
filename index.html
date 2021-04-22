@@ -9,9 +9,11 @@
 
         <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
         <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.1/dist/aframe-extras.min.js"></script>
-        <script src="scripts/color-changer.js"></script>
-        <script src="scripts/button-press.js"></script>
-        <script src="scripts/rotate.js"></script>
+        
+        <script src="./ourscripts/grab-to-shoot.js"></script>
+        <script src="./ourscripts/hit-handler.js"></script>
+
+        <script src="./thirdparty/aframe-super-shooter-kit.min.js"></script>
     
         <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
     
@@ -115,47 +117,12 @@
             
             <a-gltf-model src="#map" position="0 0 0" rotation="0 90 0">
                 <a-gltf-model src="#terminal" position="0 0 19" scale="0.01 0.01 0.01"></a-gltf-model>
-            </a-gltf-model>
 
-            <!--
-            <a-gltf-model 
-                croquet="name: corridor;"
-                position="0 1.8 0" 
-                src="#corridor" 
-                rotate
-            >
-                <a-plane
-                    croquet="name: plane;"
-                    id="floor"
-                    position="0 -2 0"
-                    rotation="-90 0 0"
-                    width="39.9"
-                    height="6"
-                    material="opacity:0"
-                    static-body
-                ></a-plane>
-                <a-box
-                    croquet="name: box;"
-                    static-body
-                    position="-3 -0.5 -3.3"
-                    depth="0.1"
-                    height="0.3"
-                    width="0.3"
-                    color="#4CC3D9"
-                    clickable
-                    button-press
-                ></a-box>
-                <a-sphere
-                    croquet="name: sphere;"
-                    grabbable
-                    stretchable
-                    dynamic-body
-                    position="0 -1 -0.5"
-                    radius="0.1"
-                    color-changer
-                ></a-sphere>
-            </a-gltf-model>
-            -->
+                 <!-- SEALER OBJECTS -->
+                 <a-entity croquet="name: foam;" id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.1" material="color: white"></a-entity>
+                 <a-entity croquet="name: target;" class="target" target="healthPoints: 10" geometry="primitive: box" material="color: teal" position="0 0 -4" hit-handler static-body></a-entity> 
+                 <a-cylinder croquet="name: sealer;" id="sealer" geometry="height: 0.25; radius: 0.05" color="#add8e6" dynamic-body grabbable shooter grab-to-shoot position="5 -1 0"></a-cylinder>
+            </a-gltf-model>           
         </a-scene>
     </body>
 

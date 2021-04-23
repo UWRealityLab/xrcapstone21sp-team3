@@ -40,6 +40,12 @@
             <span class="cd-label">Week 2</span>
           </a>
 	      </li>
+	  <li>
+		      <a href="#W3">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 3</span>
+          </a>
+	      </li>
       </ul>
     </nav>
 
@@ -95,6 +101,39 @@
 <p>Next week we will be focusing on building out the MVP for our game, starting with our environment, which we will be getting from the Unity Asset store once our budget is approved. We also plan on building out our initial tasks for each player. Each team member will be focused on their specific area of specialization: Caelen will be building out the environment, Devika will focus on in-game objectives, Elana will improve the player movements and controls, and Timo will continue working on the multiplayer capabilities and networking. </p>
 	      
 <p>As for blocking issues, our animated corridor does not seem to work when two players are in the scene. When one of the players clicks the button to rotate the corridor, it starts the animation, but then stops and returns the corridor to its original position for some reason. We’re not really sure why it only does this when there are multiple players in a scene. Additionally, when two players are in the scene, the ball appears to flash between two locations for both players after it is moved from its original location. </p>
+	      </div>
+	    
+	 <div class="blog-header" id="W3">Week 3</div>
+    <div class="horizontal-divider"></div>
+      <div class="blog-entry">
+	      <p>The following is what each team member accomplished this week:</p>
+	      <ul>
+        <li>
+		<p>Caelen worked on acquiring a 3D model of the space station interior, and editing it in Blender to fit our specifications and narrative.
+</p>
+        </li>
+	<li>
+		<p>Devika worked on creating one of the initial interactions for the “robot” player, which is clear fallen debris with the robot’s ability to move objects at a range with raycasting (similar to “the force”). So far, we have blocks that can be raycasted to, but we are still working on being able to make it grabbable at the same distance so it can be moved in that range.
+</p>
+        </li>
+	<li>
+		<p>Elana created one of the initial interactions for the “human” player, which is to seal a hole where air is leaking out. So far, we have a cylinder (which will later be the Spray Sealer™) that shoots out spheres (representing the sealer) when you grab it.
+</p>
+        </li>
+	<li>
+		<p>Timo worked on creating and alternating character models for players when connecting.</p>
+        </li>
+      </ul>
+<p>We’re moving our codebase from Glitch to GitHub! Our code can be found here: <a href="https://github.com/UWRealityLab/xrcapstone21sp-team3">UWRealityLab/xrcapstone21sp-team3 (github.com)</a>
+ </p>
+	      
+<p>Our biggest update is that we have an initial map layout! We planned out the introductory areas for our brave astronaut and robot characters, and have tasks planned to fill out those areas. One idea we’re excited about on the human side is an air leak that must be fixed using a Spray Sealer™ (similar to a fire extinguisher). On the robot side of things, we will soon be seeing a telekinetic power to move debris out of the way so the robot can clear the way to a computer terminal.
+ </p>
+	      
+<p>We will continue to work towards getting our minimum viable product, which will be done by May 4th. Next week, we will be focusing on building out more of the intro sequence. Caelen will be focused on implementing models into our current environment and creating the robot’s terminal screen, Devika will continue building initial objectives and interactions for the players, Elana will work to enable physics for the player characters as well as help implement interactions, and Timo will work on implementing specific controls for each of our characters.</p>
+	      
+<p>We’ve been having trouble importing .obj models into our project. For the time being, we’re looking to use .gltf models only, but it would be nice to expand the selection of models we can choose from. We’re also planning on hosting our app on a GitLab repository instead of Glitch because Glitch is having a hard time loading the space station model we are using for our map.
+ </p>
 	      </div>
     </div>
     </article>

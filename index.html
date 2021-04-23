@@ -9,7 +9,6 @@
 
         <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
         <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.1/dist/aframe-extras.min.js"></script>
-        <script src="https://cdn.rawgit.com/elbobo/aframe-multisrc-component/b6d23310/dist/0.3/aframe-multisrc-component.js"></script>    
         <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
         <script src="https://unpkg.com/aframe-physics-extras/dist/aframe-physics-extras.min.js"></script>
@@ -27,7 +26,10 @@
     
         <!-- Modules are loaded after the document (and therefore A-Frame scene) loads  -->
         <script src="thirdparty/index.js" type="module"></script>
+        <script src="thirdparty/aframe-super-shooter-kit.min.js"></script>
 
+        <script src="scripts/grab-to-shoot.js"></script>
+        <script src="scripts/hit-handler.js"></script>
         <script src="scripts/button-press.js"></script>
         <script src="scripts/slideshow.js"></script>
     </head>
@@ -115,6 +117,13 @@
 
             <a-gltf-model croquet="name: map;" src="#map" position="0 0 0" rotation="0 90 0">
 
+                <!-- HUMAN START -->
+
+                <!-- sealer objects -->
+                <a-entity croquet="name: foam;" id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.1" material="color: white"></a-entity>
+                <a-entity croquet="name: target;" class="target" target="healthPoints: 10" geometry="primitive: box" material="color: teal" position="0 0 -4" hit-handler static-body></a-entity> 
+                <a-cylinder croquet="name: sealer;" id="sealer" geometry="height: 0.25; radius: 0.05" color="#add8e6" dynamic-body grabbable shooter grab-to-shoot position="5 -1 0"></a-cylinder>
+
                 <!-- ROBOT START -->
 
                 <!-- terminal -->
@@ -133,8 +142,6 @@
                 <a-gltf-model croquet="name: monitor;" src="#monitor" position="-15.5 1 16" rotation="0 90 0" scale="0.075 0.075 0.075">
                     <a-plane slideshow src="#floor-plan-1" position="0 18.5 2.2" width="60" height="30"></a-plane>
                 </a-gltf-model>
-
-                <!-- HUMAN START -->
 
             </a-gltf-model>
 

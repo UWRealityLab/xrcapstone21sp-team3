@@ -29,16 +29,22 @@
         <script src="thirdparty/index.js" type="module"></script>
 
         <script src="scripts/button-press.js"></script>
+        <script src="scripts/slideshow.js"></script>
     </head>
     <body>
         <a-scene physics="gravity:-1.62" cursor="rayOrigin: mouse" croquet>
             <a-assets>
-                <img id="sky-box" src="assets/space.jpg"></img>
-                <img id="arrow" src="assets/arrow.jpg">
+                <img id="sky-box" src="assets/images/space.jpg"></img>
+                <img id="arrow" src="assets/images/arrow.jpg"></img>
+                <img id="floor-plan-1" src="assets/images/room1.png"></img>
+                <img id="floor-plan-2" src="assets/images/room2.png"></img>
+                <img id="floor-plan-3" src="assets/images/room3.png"></img>
+                <img id="floor-plan-4" src="assets/images/room4.png"></img>
+                <img id="floor-plan-5" src="assets/images/room5.png"></img>
 
-                <a-asset-item id="map" src="assets/map.glb"></a-asset-item>
-                <a-asset-item id="terminal_1" src="assets/terminal_1.glb"></a-asset-item>
-                <a-asset-item id="monitor" src="assets/monitor.glb"></a-asset-item>
+                <a-asset-item id="map" src="assets/models/map.glb"></a-asset-item>
+                <a-asset-item id="terminal-1" src="assets/models/terminal_1.glb"></a-asset-item>
+                <a-asset-item id="monitor" src="assets/models/monitor.glb"></a-asset-item>
             </a-assets>
 
             <!-- PLAYER -->
@@ -56,8 +62,8 @@
                 </a-entity>
             </template>
 
-            <!-- human: 0 0 -20 -->
-            <!-- robot: 16 0 0 -->
+            <!-- human start: 0 0 -20 -->
+            <!-- robot start: 16 0 0 -->
             <a-entity
                 id="camera"
                 navigator="cameraRig: #camera; cameraHead: #head; collisionEntities: .collision; ignoreEntities: .clickable"
@@ -108,8 +114,11 @@
             <a-light croquet="name: dLight6" type="directional" intensity="0.5" position="0 0 -1"></a-light>
 
             <a-gltf-model croquet="name: map;" src="#map" position="0 0 0" rotation="0 90 0">
-                <!-- robot start: terminal -->
-                <a-gltf-model croquet="name: terminal_1;" src="#terminal_1" position="-9.75 0 19.5" scale="0.01 0.01 0.01">
+
+                <!-- ROBOT START -->
+
+                <!-- terminal -->
+                <a-gltf-model croquet="name: terminal-1;" src="#terminal-1" position="-9.75 0 19.5" scale="0.01 0.01 0.01">
                     <!-- left button -->
                     <a-box button-press color="#006e9e" position="12 137 3" rotation="0 0 180" scale="20 25 5">
                         <a-plane src="#arrow" position="0 0 -0.51" rotation="0 180 0" width="1" height="1"></a-plane>
@@ -120,10 +129,13 @@
                     </a-box>
                 </a-gltf-model>
                 
-                <!-- robot start: monitor -->
+                <!-- monitor -->
                 <a-gltf-model croquet="name: monitor;" src="#monitor" position="-15.5 1 16" rotation="0 90 0" scale="0.075 0.075 0.075">
-                    <a-plane position="0 18.5 2.2" width="60" height="30" color="blue"></a-plane>
+                    <a-plane slideshow src="#floor-plan-1" position="0 18.5 2.2" width="60" height="30"></a-plane>
                 </a-gltf-model>
+
+                <!-- HUMAN START -->
+
             </a-gltf-model>
 
         </a-scene>

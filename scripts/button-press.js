@@ -2,6 +2,7 @@ AFRAME.registerComponent('button-press', {
   init: function() {
     const DURATION = 250;
     
+    let data = this.data;
     let el = this.el;
     let p = el.getAttribute('position');
 
@@ -20,11 +21,9 @@ AFRAME.registerComponent('button-press', {
       setTimeout(() => {el.emit('depressed');}, DURATION)
 
       // toggle slides
-      if (p.x == 12) {
-        // left button
+      if (data.direction == 'left') {
         el.emit('left-pressed');
-      } else if (p.x == -12) {
-        // right button
+      } else if (data.direction == 'right') {
         el.emit('right-pressed');
       }
     }
@@ -43,11 +42,11 @@ AFRAME.registerComponent('button-press', {
       el.setAttribute('animation', params);
     }
 
-    this.el.addEventListener('click', this.moveIn);
+    this.el.addEventListener('hover-start', this.moveIn);
     this.el.addEventListener('depressed', this.moveOut);
   },
   remove: function() {
-    this.el.removeEventListener('click', this.moveIn);
+    this.el.removeEventListener('hover-start', this.moveIn);
     this.el.removeEventListener('depressed', this.moveOut);
   }
 });

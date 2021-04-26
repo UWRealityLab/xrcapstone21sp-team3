@@ -32,6 +32,8 @@
         <script src="scripts/hit-handler.js"></script>
         <script src="scripts/button-press.js"></script>
         <script src="scripts/slideshow.js"></script>
+        <script src="scripts/spring.js"></script>
+        <script src="scripts/show-spring.js"></script>
     </head>
     <body>
         <a-scene physics="gravity:-1.62" cursor="rayOrigin: mouse" croquet>
@@ -116,6 +118,8 @@
             <a-light croquet="name: dLight6" type="directional" intensity="0.5" position="0 0 -1"></a-light>
 
             <a-gltf-model croquet="name: map;" src="#map" position="0 0 0" rotation="0 90 0">
+                <a-plane croquet="name: floor;" static-body position="0 0.1 0" rotation="-90 0 0" width="60" height="60" material="opacity:0"></a-plane>
+                <a-plane croquet="name: wall-1;" static-body position="-15.35 0 16" rotation="0 90 0" width="10" height="10" material="opacity:0"></a-plane>
 
                 <!-- HUMAN START -->
 
@@ -141,7 +145,19 @@
                 <!-- monitor -->
                 <a-gltf-model croquet="name: monitor;" src="#monitor" position="-15.5 1 16" rotation="0 90 0" scale="0.075 0.075 0.075">
                     <a-plane slideshow src="#floor-plan-1" position="0 18.5 2.2" width="60" height="30"></a-plane>
+                    <a-box id="tv-wire-start" static-body position="0 -1 1" scale="3 3 3" color="black"></a-box>
+                    <a-box id="tv-wire-end" grabbable 
+                           spring="target: #tv-wire-start; stiffness: 5; damping: 10" 
+                           dynamic-body="linearDamping: 0.9; angularDamping: 0.9" 
+                           position="1 -9 11" scale="3 3 3" color="white"
+                    ></a-box>
+                    <a-entity show-spring="start: tv-wire-start; end: tv-wire-end" line="color: black"></a-entity>
                 </a-gltf-model>
+
+                <!-- wire -->
+                <a-box position="2 3 17" scale="0.5 0.5 0.5" id="stationary" color="blue" static-body></a-box>
+                <a-box grabbable position="2 2 17" scale="0.5 0.5 0.5" id="swing" color="green" dynamic-body="linearDamping: 0.9; angularDamping: 0.9" spring="target: #stationary"></a-box>
+                <a-entity show-spring="start: stationary; end: swing" line="color: red"></a-entity>
 
             </a-gltf-model>
 

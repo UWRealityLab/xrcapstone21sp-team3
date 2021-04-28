@@ -141,7 +141,7 @@
                         <a-plane src="#arrow" position="0 0 -0.52" rotation="0 180 0" width="1" height="1"></a-plane>
                     </a-box>
                     <!-- outlet -->
-                    <a-plane id="outlet" position="0 26 -11" rotation="0 180 0" width="20" height="20" color="white">
+                    <a-plane position="0 26 -11" rotation="0 180 0" width="20" height="20" color="white">
                         <a-plane position="4 0 0.1" width="4" height="12" color="black"></a-plane>
                         <a-plane position="-4 0 0.1" width="4" height="12" color="black"></a-plane>
                     </a-plane>
@@ -157,17 +157,18 @@
                            position="1 -9 11" scale="2.5 2.5 2.5" color="white"
                     >
                         <a-box position="0.2 0 0.75" scale="0.2 0.6 0.5" color="grey"></a-box>
-                        <a-box position="-0.2 0 0.75" scale="0.2 0.6 0.5" color="grey"></a-box>
+                        <a-box position="-0.2 0 0.75" scale="0.2 0.6 0.5" color="black"></a-box>
                     </a-box>
                     <a-entity show-spring="start: #tv-wire-start; end: #tv-wire-end" line="color: black"></a-entity>
                 </a-gltf-model>
 
                 <!-- wire -->
+                <!--
                 <a-box id="stationary" body="type: static" position="2 3 17" scale="0.5 0.5 0.5" color="blue"></a-box>
                 <a-box id="swing" plug-in="target: #bottom" grabbable spring="target: #stationary" body="type: dynamic; linearDamping: 0.9; angularDamping: 0.9" position="2 2 17" scale="0.5 0.5 0.5" color="green"></a-box>
                 <a-entity show-spring="start: #stationary; end: #swing" line="color: red"></a-entity>
-
                 <a-box id="bottom" static-body position="2 1 17" scale="0.5 0.5 0.5" color="grey"></a-box>
+                -->
 
             </a-gltf-model>
 

@@ -4,6 +4,22 @@ AFRAME.registerComponent('plug-in', {
     },
     init: function() {
         let el = this.el;
+        //alert(el.childNodes[3].getAttribute('color'));
+        
+        el.childNodes[1].addEventListener('collide', () => {});
+    },
+    remove: function() {
+
+    }
+});
+
+/*
+AFRAME.registerComponent('plug-in', {
+    schema: {
+        target: {type: 'selector'}
+    },
+    init: function() {
+        let el = this.el;
         let data = this.data;
 
         this.plugIn = function(e) {
@@ -25,3 +41,4 @@ AFRAME.registerComponent('plug-in', {
         this.el.addEventListener('grab-start', this.plugOut);
     }
 });
+*/

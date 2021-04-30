@@ -46,6 +46,12 @@
             <span class="cd-label">Week 3</span>
           </a>
 	      </li>
+	    <li>
+		      <a href="#W4">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 4</span>
+          </a>
+	      </li>
       </ul>
     </nav>
 
@@ -133,6 +139,42 @@
 <p>We will continue to work towards getting our minimum viable product, which will be done by May 4th. Next week, we will be focusing on building out more of the intro sequence. Caelen will be focused on implementing models into our current environment and creating the robot’s terminal screen, Devika will continue building initial objectives and interactions for the players, Elana will work to enable physics for the player characters as well as help implement interactions, and Timo will work on implementing specific controls for each of our characters.</p>
 	      
 <p>We’ve been having trouble importing .obj models into our project. For the time being, we’re looking to use .gltf models only, but it would be nice to expand the selection of models we can choose from. We’re also planning on hosting our app on a GitLab repository instead of Glitch because Glitch is having a hard time loading the space station model we are using for our map.
+ </p>
+	      </div>
+	    <div class="blog-header" id="W4">Week 4</div>
+    <div class="horizontal-divider"></div>
+      <div class="blog-entry">
+	      <p>The following is what each team member accomplished this week:</p>
+	      <ul>
+        <li>
+		<p>Caelen worked on decreasing the size of the map, as well as implementing the wiring task.
+</p>
+        </li>
+	<li>
+		<p>Devika finished implementing the robot’s ‘telekinesis’ ability and added in objects for the robot to move.
+</p>
+        </li>
+	<li>
+		<p>Elana fixed some bugs and improved interactions for the human’s initial tasks, which are to seal the crack in the window and to use the flashlight to identify the shape of the room they are in.
+</p>
+        </li>
+	<li>
+		<p>Timo worked on the character models, the croquet physics system, the integration of the codebase onto gitlab, as well as investigating bugs in the multiplayer of the integrated code</p>
+        </li>
+      </ul>
+<p>We started integrating all our code to a gitlab repository where we will be hosting our app in the future due to performance constraints. You can now find our code here: https://gitlab.cs.washington.edu/cse481v-21sp/team3, and our most up to date demo here: https://courses.cs.washington.edu/courses/cse481v/21sp/projects/team3/. </a>
+ </p>
+	      
+<p>Our plan for the MVP coming up soon is largely the same, so this week we have decided to give you a look into the features we have whipped up! Here are some demo videos of the interactions and environment we have been building: 
+		  </p>
+		  <p>Here is a video demonstrating the 'telekinesis' ability: <video width="450" height="270" controls=""><source src="./videos/moving_block_at_distance.mp4" type="video/mp4"></video></p>
+		  
+		  <p>Here is a video demonstrating the Spray Sealer™ sealing the crack in the window, the lights turning off as a result of sealing the window, and the flashlight: <video width="450" height="270" controls=""><source src="./videos/com.oculus.browser-20210429-114036.mp4" type="video/mp4"></video></p>
+		  <p>And here is a video showing off part of the map we plan on using with the items the robot will eventually have to move to do their task: <video width="450" height="270" controls=""><source src="./videos/debris_items_view.mp4" type="video/mp4"></video></p>
+	      
+<p>This next week we will be integrating and finalizing our code in preparation for the MVP presentation on May 4th (may the 4th be with you) and squashing any bugs we find along the way. We will also be working on our presentation for the same day. Individually, Caelen will work on making the map smaller in size so our app can load on the Oculus Quest 2, Devika will finish interactions for the robot character for the first stage and begin interactions for final stage, Elana will finish interactions for the human character for the first stage and begin implementing zero gravity, and Timo will create interactions between human and robot players and ensure physics are working properly. Additionally, we will all work to integrate each element we have been working on this week into a single codebase and environment.</p>
+	      
+<p>This past week, we finally got access to a single repository with enough storage to handle our larger assets, however we found the large file size of our map and some assets is an issue to performance and load times in the WebVR environment. We are working to reduce these file sizes to fit our constraints. There was also some struggle finding a way to sync character model movements to the controller movements, so we are using floating heads with hands synced to controllers to represent our characters. Finally, we’ve had some issues with the croquet physics system and interactions with objects, and while we’ve figured out most of the problems, we’re going to save the use of this system for future levels of the game where object synchronization will be needed due to the players no longer being separated. For the MVP the players are separated, so we will use a local physics system for now.
  </p>
 	      </div>
     </div>

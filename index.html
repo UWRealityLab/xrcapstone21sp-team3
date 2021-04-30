@@ -13,20 +13,22 @@
         <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
         <script src="https://unpkg.com/aframe-physics-extras/dist/aframe-physics-extras.min.js"></script>
         <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
-    
+
         <!-- https://croquet.studio/sdk/docs/index.html -->
         <script src="https://unpkg.com/@croquet/croquet@0.4.0"></script>
-    
+
         <!-- https://croquet.studio/sdk/docs/global.html#Constants -->
         <script src="thirdparty/constants.js"></script>
-    
+
         <!-- Here we register the croquet system/component immediately before the scene loads -->
         <script src="thirdparty/system.js"></script>
         <script src="thirdparty/component.js"></script>
-    
+
         <!-- Modules are loaded after the document (and therefore A-Frame scene) loads  -->
         <script src="thirdparty/index.js" type="module"></script>
         <script src="thirdparty/aframe-super-shooter-kit.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/gh/oneWaveAdrian/aframe-particle-system-component@aframe-1.2.0-upgrade/dist/aframe-particle-system-component.min.js"></script>
 
         <script src="scripts/grab-to-shoot.js"></script>
         <script src="scripts/hit-handler.js"></script>
@@ -34,6 +36,8 @@
         <script src="scripts/slideshow.js"></script>
         <script src="scripts/show-spring.js"></script>
         <script src="scripts/plug-in.js"></script>
+        <script src="scripts/light-switch.js"></script>
+        <script src="scripts/turn-off-lights.js"></script>
     </head>
     <body>
         <a-scene physics="gravity:-1.62" cursor="rayOrigin: mouse" croquet>
@@ -49,20 +53,41 @@
                 <a-asset-item id="map" src="assets/models/map.glb"></a-asset-item>
                 <a-asset-item id="terminal-1" src="assets/models/terminal_1.glb"></a-asset-item>
                 <a-asset-item id="monitor" src="assets/models/monitor.glb"></a-asset-item>
+                <a-asset-item id="crate_a" src="assets/models/crate_a.glb"></a-asset-item>
+                <a-asset-item id="crate_b" src="assets/models/crate_b.glb"></a-asset-item>
+                <a-asset-item id="pipe_c" src="assets/models/pipeline_c.glb"></a-asset-item>
+                <a-asset-item id="door_a" src="assets/models/door_a.glb"></a-asset-item>
+
+                <a-asset-item id="human" src="assets/models/humanHead.glb"></a-asset-item>
+                <a-asset-item id="robot" src="assets/models/robotHead.glb"></a-asset-item>
             </a-assets>
 
             <!-- PLAYER -->
 
-            <template id="userTemplate">
-                <a-entity class="user">
+            <template id="humanTemplate">
+                <a-entity class="user" dynamic-body>
                     <a-gltf-model
-                        src="https://cdn.glitch.com/ebbea273-4dc0-4e45-98a9-1e7536d9ffeb%2FCesiumMan.gltf?v=1618458256256"
+                        src="#human"
                         id="cameraHead"
                         class="head"
-                        scale="1.3 1.3 1.3"
-                        position="0 -1.7 0"
+                        scale="1.5 1.5 1.5"
+                        position="0 -0.75 0"
                         rotation="-10 180 0"
                     ></a-gltf-model>
+                </a-entity>
+            </template>
+
+            <template id="robotTemplate">
+                <a-entity class="user" dynamic-body>
+                    <a-gltf-model
+                        src="#robot"
+                        id="cameraHead"
+                        class="head"
+                        scale="0.5 0.5 0.5"
+                        position="0 0 0"
+                        rotation="-10 180 0"
+                    >
+                    </a-gltf-model>
                 </a-entity>
             </template>
 
@@ -81,14 +106,14 @@
                     position="0 1 0"
                     look-controls
                 ></a-entity>
-    
+
                 <a-entity
                     id="rightHand"
-                    super-hands
+                    super-hands="colliderEvent: raycaster-intersection; colliderEventProperty: els; colliderEndEvent: raycaster-intersection-cleared; colliderEndEventProperty: clearedEls"
+                    laser-controls
                     hand-controls="hand: right; handModelStyle: highPoly; color: #afafaf"
                     sphere-collider="objects: a-sphere, a-box"
                     visible="true"
-                    raycaster="objects: .clickable"
                     static-body="shape: sphere; sphereRadius: 0.02"
                     physics-collider
                 ></a-entity>
@@ -98,7 +123,7 @@
                     super-hands
                     hand-controls="hand: left; handModelStyle: highPoly; color: #afafaf"
                     sphere-collider="objects: a-sphere, a-box"
-                    teleport-controls="cameraRig: #camera; teleportOrigin: #head; button: menu; hitCylinderColor: #7a96ea; curveHitColor: #7a96ea; curveNumberPoints: 5000; curveShootingSpeed:18; landingMaxAngle: 60"
+                    teleport-controls="collisionEntities: #floorgeometry; cameraRig: #camera; teleportOrigin: #head; button: trigger; hitCylinderColor: #7a96ea; curveHitColor: #7a96ea; interval: 20;"
                     visible="true"
                     raycaster="objects: .clickable"
                     static-body="shape: sphere; sphereRadius: 0.02"
@@ -109,24 +134,57 @@
             <!-- SCENE -->
 
             <a-sky croquet="name: sky;" src="#sky-box"></a-sky>
-            
-            <a-light croquet="name: dLight1" type="directional" intensity="0.5" position="1 0 0"></a-light>
-            <a-light croquet="name: dLight2" type="directional" intensity="0.5" position="-1 0 0"></a-light>
-            <a-light croquet="name: dLight3" type="directional" intensity="0.5" position="0 1 0"></a-light>
-            <a-light croquet="name: dLight4" type="directional" intensity="0.5" position="0 -1 0"></a-light>
-            <a-light croquet="name: dLight5" type="directional" intensity="0.5" position="0 0 1"></a-light>
-            <a-light croquet="name: dLight6" type="directional" intensity="0.5" position="0 0 -1"></a-light>
+
+            <a-light croquet="name: dLight1" type="directional" intensity="0.5" position="1 0 0" turn-off-lights></a-light>
+            <a-light croquet="name: dLight2" type="directional" intensity="0.5" position="-1 0 0" turn-off-lights></a-light>
+            <a-light croquet="name: dLight3" type="directional" intensity="0.5" position="0 1 0" turn-off-lights></a-light>
+            <a-light croquet="name: dLight4" type="directional" intensity="0.5" position="0 -1 0" turn-off-lights></a-light>
+            <a-light croquet="name: dLight5" type="directional" intensity="0.5" position="0 0 1" turn-off-lights></a-light>
+            <a-light croquet="name: dLight6" type="directional" intensity="0.5" position="0 0 -1" turn-off-lights></a-light>
 
             <a-gltf-model croquet="name: map;" src="#map" position="0 0 0" rotation="0 90 0">
+                <a-entity id="floorgeometry" croquet="name: floorgeometry;">
+                    <a-entity position="0 0 -2.5" rotation="0 90 0" geometry="primitive: box; depth: 8.5; height: 0.5; width: 28"
+                              material="opacity: 0" static-body>
+                    </a-entity>
+                    <a-entity position="4.5 0 16" geometry="primitive: box; depth: 8.5; height: 0.5; width: 40"
+                              material="opacity: 0" static-body>
+                    </a-entity>
+                    <a-entity position="4.5 0 -21"geometry="primitive: box; depth: 9.5; height: 0.5; width: 40"
+                              material="opacity: 0" static-body>
+                    </a-entity>
+                    <a-entity position="20 0 6" rotation="0 90 0" geometry="primitive: box; depth: 8.5; height: 0.5; width: 28"
+                              material="opacity: 0" static-body>
+                    </a-entity>
+                    <a-entity position="22.5 0 -12" rotation="0 90 0" geometry="primitive: box; depth: 4.5; height: 0.5; width: 8"
+                              material="opacity: 0" static-body>
+                    </a-entity>
+                </a-entity>
+
                 <a-plane croquet="name: floor;" static-body position="0 0.1 0" rotation="-90 0 0" width="60" height="60" material="opacity:0"></a-plane>
                 <a-plane croquet="name: wall-1;" static-body position="-15.35 0 16" rotation="0 90 0" width="10" height="10" material="opacity:0"></a-plane>
 
                 <!-- HUMAN START -->
 
                 <!-- sealer objects -->
-                <a-entity croquet="name: foam;" id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.1" material="color: white"></a-entity>
-                <a-entity croquet="name: target;" class="target" target="healthPoints: 10" geometry="primitive: box" material="color: teal" position="0 0 -4" hit-handler static-body></a-entity> 
-                <a-cylinder croquet="name: sealer;" id="sealer" geometry="height: 0.25; radius: 0.05" color="#add8e6" dynamic-body grabbable shooter grab-to-shoot position="5 -1 0"></a-cylinder>
+                <a-entity id="bulletTemplate" bullet="maxTime: 0.25" geometry="primitive: sphere; radius: 0.25" material="color: white; opacity: 1"></a-entity>
+
+                <a-entity class="target" id="foamTarget" target="healthPoints: 5" geometry="primitive: box; depth: 0.1" material="opacity: 0" position="24.5 3 -2.9" rotation="0 -90 0" static-body>
+                    <a-entity position="0 -2 -.5" hit-handler particle-system="preset: default; color: #ffffff,#000000; texture: https://raw.githubusercontent.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/cloudSml.png; accelerationValue: 0 0 0; accelerationSpread: 10 10 0; velocityValue: 0 0 -10; velocitySpread: 7 7 3.5; maxAge: 1; size: 1; maxParticleCount: 1000; opacity: 0.25"></a-entity>
+                    <a-plane rotation="0 0 20" position="0 -2 -.25" material="color: #ffffff; opacity:0.9" geometry="width:1; height:0.01"></a-plane>
+                    <a-plane rotation="0 0 -20" position="0 -2 -.25" material="color: #ffffff; opacity:0.9" geometry="width:0.4; height:0.01"></a-plane>
+                    <a-plane rotation="0 0 -10" position="0 -2 -.25" material="color: #ffffff; opacity:0.9" geometry="width:0.1; height:0.01"></a-plane>
+                    <a-plane rotation="0 0 10" position="0 -2 -.25" material="color: #ffffff; opacity:0.9" geometry="width:0.3; height:0.01"></a-plane>
+                    <a-plane rotation="0 0 -30" position="0 -2 -.25" material="color: #ffffff; opacity:0.9" geometry="width:0.2; height:0.01"></a-plane>
+                </a-entity>
+                <a-cylinder croquet="name: sealer;" dynamic-body id="sealer" geometry="height: 0.25; radius: 0.05" color="#add8e6" grabbable="endButtons: gripup; maxGrabbers:1" shooter grab-to-shoot position="20 0.25 0">
+                    <a-entity id="sealantParticle" particle-system="preset: default; color: #ffffff; texture: https://raw.githubusercontent.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/smokeparticle.png; accelerationValue: 0 0 0; accelerationSpread: 0 0 0; velocityValue: 0 0 -2; velocitySpread: 1 1 0.5; maxAge: 1; size: 0.5; maxParticleCount: 500; opacity: 0.5; enabled: false"></a-entity>
+                </a-cylinder>
+
+                <!-- flashlight -->
+                <a-cylinder croquet="name: flashLight;" dynamic-body id="flashlight" geometry="height: 0.25; radius: 0.05" color="#808080" grabbable="endButtons: gripup; maxGrabbers: 1" position="20 0.25 3">
+                    <a-entity geometry="primitive: sphere; radius: 0.05" light="type: spot; intensity: 0; angle: 30; distance: 10; decay: 2" position="0 -0.12 0" rotation="-90 0 0" light-switch></a-entity>
+                </a-cylinder>
 
                 <!-- ROBOT START -->
 
@@ -163,17 +221,42 @@
                 </a-gltf-model>
 
                 <!-- wire -->
-                <!--
                 <a-box id="stationary" body="type: static" position="2 3 17" scale="0.5 0.5 0.5" color="blue"></a-box>
                 <a-box id="swing" plug-in="target: #bottom" grabbable spring="target: #stationary" body="type: dynamic; linearDamping: 0.9; angularDamping: 0.9" position="2 2 17" scale="0.5 0.5 0.5" color="green"></a-box>
                 <a-entity show-spring="start: #stationary; end: #swing" line="color: red"></a-entity>
                 <a-box id="bottom" static-body position="2 1 17" scale="0.5 0.5 0.5" color="grey"></a-box>
-                -->
+
+                <!--items to hide terminal and monitor, comment these out if you want to use them-->
+                <!--TODO: add "dynamic body" attribute to all of these when map loads faster (they just fall through space if i do that rn)-->
+                <a-gltf-model hoverable grabbable croquet="name: crate_a0;" src="#crate_a" position="-14.5 0.2 18" rotation="0 90 0" scale="1.5 1.5 1.5">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: crate_a1;" src="#crate_a" position="-14.5 0.2 15.6" rotation="0 90 0" scale="1.5 1.5 1.5">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: crate_a2;" src="#crate_a" position="-14.5 1.4 17.5" rotation="0 90 0" scale="1.5 1.5 1.5">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: crate_a3;" src="#crate_a" position="-14.5 1.4 15.1" rotation="0 90 0" scale="1.5 1.5 1.5">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: crate_a4;" src="#crate_a" position="-13.5 0.2 13.65" scale="1.5 1.5 1.5">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: pipe_c0;" src="#pipe_c" position="-14.5 2.8 15.6" rotation="90 0 0" scale="1.5 1.5 1.5">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: pipe_c1;" src="#pipe_c" position="-13.5 1.6 13.65" rotation="0 0 90" scale="1.5 1.5 1.5">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: crate_b0;" src="#crate_b" position="-10.7 0.1 19" rotation="0 90 0" scale="0.7 0.7 0.7">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: crate_b1;" src="#crate_b" position="-10.7 0.9 19" rotation="0 90 0" scale="0.7 0.7 0.7">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: crate_b2;" src="#crate_b" position="-10.7 1.7 19" rotation="0 90 0" scale="0.7 0.7 0.7">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: pipe_c2;" src="#pipe_c" position="-9 1 19.4" rotation="0 90 0" scale="1.8 1.8 1.8">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: pipe_c2;" src="#pipe_c" position="-8.5 1 19.4" rotation="0 90 0" scale="1.8 1.8 1.8">
+                </a-gltf-model>
+                <a-gltf-model hoverable grabbable croquet="name: door_a;" src="#door_a" position="-9.3 0.1 19" scale="0.6 0.6 0.6">
+                </a-gltf-model>
 
             </a-gltf-model>
 
         </a-scene>
     </body>
-
-    <script src="thirdparty/randomizeLocation.js"></script>
 </html>

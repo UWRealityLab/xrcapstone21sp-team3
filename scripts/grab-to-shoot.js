@@ -1,18 +1,27 @@
 AFRAME.registerComponent('grab-to-shoot', {
-   
-  init: function () {
-    
-    let el = this.el;
-    let grabbed = false;
 
-    this.shoot = function() {
-      el.emit('shoot');
+  init: function () {
+    let el = this.el;
+    let particles = document.querySelector('#sealantParticle');
+
+    this.shootFoam = function() {
+      if (el.is('grabbed')) {
+        el.emit('shoot');
+        particles.setAttribute('particle-system', 'enabled', 'true');
+      }
     }
-    
-    this.el.addEventListener('grab-start', this.shoot);
+
+    this.stopFoam = function() {
+      particles.setAttribute('particle-system', 'enabled', 'false');
+    }
+
+    document.body.addEventListener('triggerdown', this.shootFoam);
+    document.body.addEventListener('triggerup', this.stopFoam);
   },
-  
+
   remove: function() {
-    this.el.removeEventListener('grab-start', this.shoot);
+    document.body.removeEventListener('triggerdown', this.shootFoam);
+    document.body.removeEventListener('triggerup', this.stopFoam);
   }
+
 });

@@ -14,7 +14,7 @@ Q.LOGGING = {
   UserModel: false,
   UserView: false,
 
-  EntityModel: true,
+  EntityModel: false,
   EntityView: false,
 
   PhysicsModel: false,

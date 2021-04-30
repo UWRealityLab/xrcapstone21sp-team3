@@ -1,21 +1,27 @@
 AFRAME.registerComponent('hit-handler', {
-  dependencies: ['material'],
 
   init: function () {
-    var color;
-    var el = this.el;
+    let el = this.el;
+    let target = document.querySelector('#foamTarget');
 
-    color = new THREE.Color();
-    color.set('#666');
-    el.components.material.material.color.copy(color);
-    el.addEventListener('hit', () => {
-      color.addScalar(0.05);
-      el.components.material.material.color.copy(color);
-    });
+    // give illusion of airflow slowing down
+    this.slowParticles = function () {
+      let curCount = el.getAttribute('particle-system').particleCount;
+      el.setAttribute('particle-system', 'particleCount', curCount-200);
+    }
 
-    el.addEventListener('die', () => {
-      color.setRGB(1, 0, 0);
-      el.components.material.material.color.copy(color);
-    });
+    // stop airflow
+    this.stopParticles = function () {
+      el.setAttribute('enabled', 'false');
+    }
+
+    target.addEventListener('hit', this.slowParticles);
+    target.addEventListener('die', this.stopParticles);
+  },
+
+  remove: function () {
+    let target = document.querySelector('#foamTarget');
+    target.removeEventListener('hit', this.slowParticles);
+    target.removeEventListener('die', this.stopParticles);
   }
 });

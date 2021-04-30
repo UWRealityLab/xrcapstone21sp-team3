@@ -1,9 +1,10 @@
 /* global Croquet, AFRAME */
 
 class UserView extends Croquet.View {
-  constructor(model) {
+  constructor(model, views) {
     super(model);
     this.model = model;
+    this.userViews = views;
 
     this.log(`Creating User View with userViewId "${this.userViewId}"`);
 
@@ -31,19 +32,35 @@ class UserView extends Croquet.View {
         1000 / 24,
         this
       );
+    } else if (this.userViews.length % 2 === 0) {
+      this.log("This UserView represents a remote user. Creating a User Entity");
+      // cloning the user template in our scene to create a user entity
+      this.entity = document
+        .getElementById("humanTemplate")
+        .content.cloneNode(true)
+        .querySelector(".user");
+      this.lastTimeMatrixWasUpdated = 0;
+      this.log("Remote User Entity Created", this.entity)
+      this.entity.addEventListener(
+        "loaded",
+        event => {
+          this.log("Remote User Entity loaded", this.entity);
+          // We want to manually update the matrix in our "update" method
+          this.entity.object3D.matrixAutoUpdate = false;
+        },
+        { once: true }
+      );
+      this.log("Adding remote user entity to the scene");
+      this.scene.appendChild(this.entity);
     } else {
       this.log("This UserView represents a remote user. Creating a User Entity");
       // cloning the user template in our scene to create a user entity
       this.entity = document
-        .getElementById("userTemplate")
+        .getElementById("robotTemplate")
         .content.cloneNode(true)
         .querySelector(".user");
-      this.head = this.entity.querySelector(".head")
-      this.head.setAttribute("color", this.color);
-      this.subscribe(this.userViewId, "update-color", this.updateColor);
       this.lastTimeMatrixWasUpdated = 0;
       this.log("Remote User Entity Created", this.entity)
-      this.addEventListener(this.head, "componentchanged", this.onHeadComponentChanged);
       this.entity.addEventListener(
         "loaded",
         event => {

@@ -146,7 +146,7 @@ class View extends Croquet.View {
     );
     const userModel = this.getUserModelByViewId(userViewId);
     if (userModel) {
-      const userView = new UserView(userModel);
+      const userView = new UserView(userModel, this.userViews);
       this.userViews.push(userView);
     }
   }

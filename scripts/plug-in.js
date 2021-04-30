@@ -1,3 +1,4 @@
+/*
 AFRAME.registerComponent('plug-in', {
     schema: {
         target: {type: 'selector'}
@@ -12,8 +13,8 @@ AFRAME.registerComponent('plug-in', {
 
     }
 });
+*/
 
-/*
 AFRAME.registerComponent('plug-in', {
     schema: {
         target: {type: 'selector'}
@@ -41,4 +42,3 @@ AFRAME.registerComponent('plug-in', {
         this.el.addEventListener('grab-start', this.plugOut);
     }
 });
-*/

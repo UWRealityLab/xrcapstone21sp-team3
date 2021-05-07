@@ -52,6 +52,12 @@
             <span class="cd-label">Week 4</span>
           </a>
 	      </li>
+	      <li>
+		      <a href="#W5">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 5</span>
+          </a>
+	      </li>
       </ul>
     </nav>
 
@@ -162,7 +168,7 @@
 		<p>Timo worked on the character models, the croquet physics system, the integration of the codebase onto gitlab, as well as investigating bugs in the multiplayer of the integrated code</p>
         </li>
       </ul>
-<p>We started integrating all our code to a gitlab repository where we will be hosting our app in the future due to performance constraints. You can now find our code here: https://gitlab.cs.washington.edu/cse481v-21sp/team3, and our most up to date demo here: https://courses.cs.washington.edu/courses/cse481v/21sp/projects/team3/. </a>
+<p>We started integrating all our code to a gitlab repository where we will be hosting our app in the future due to performance constraints. You can now find our code <a href="https://gitlab.cs.washington.edu/cse481v-21sp/team3">here</a>, and our most up to date demo <a href="https://courses.cs.washington.edu/courses/cse481v/21sp/projects/team3/">here</a>.
  </p>
 	      
 <p>Our plan for the MVP coming up soon is largely the same, so this week we have decided to give you a look into the features we have whipped up! Here are some demo videos of the interactions and environment we have been building: 
@@ -175,6 +181,42 @@
 <p>This next week we will be integrating and finalizing our code in preparation for the MVP presentation on May 4th (may the 4th be with you) and squashing any bugs we find along the way. We will also be working on our presentation for the same day. Individually, Caelen will work on making the map smaller in size so our app can load on the Oculus Quest 2, Devika will finish interactions for the robot character for the first stage and begin interactions for final stage, Elana will finish interactions for the human character for the first stage and begin implementing zero gravity, and Timo will create interactions between human and robot players and ensure physics are working properly. Additionally, we will all work to integrate each element we have been working on this week into a single codebase and environment.</p>
 	      
 <p>This past week, we finally got access to a single repository with enough storage to handle our larger assets, however we found the large file size of our map and some assets is an issue to performance and load times in the WebVR environment. We are working to reduce these file sizes to fit our constraints. There was also some struggle finding a way to sync character model movements to the controller movements, so we are using floating heads with hands synced to controllers to represent our characters. Finally, we’ve had some issues with the croquet physics system and interactions with objects, and while we’ve figured out most of the problems, we’re going to save the use of this system for future levels of the game where object synchronization will be needed due to the players no longer being separated. For the MVP the players are separated, so we will use a local physics system for now.
+ </p>
+	      </div>
+		
+	<div class="blog-header" id="W5">Week 5</div>
+    <div class="horizontal-divider"></div>
+      <div class="blog-entry">
+	      <p>The following is what each team member accomplished this week:</p>
+	      <ul>
+        <li>
+		<p>Caelen worked on finishing up the wiring puzzle, added doors to separate the rooms, and made adjustments to the debris positioning, as well as recorded footage for the demo video.
+</p>
+        </li>
+	<li>
+		<p>Devika worked on fixing two main bugs for the robot’s first task, stable box positioning and single object telekinesis through a shorter laser.
+</p>
+        </li>
+	<li>
+		<p>Elana fixed bugs related to the human player’s tasks to ensure events occurred at correct times for the MVP, as well as debugging the issue we are having where light does not reflect off our textures in the Oculus browser.
+</p>
+        </li>
+	<li>
+		<p>Timo worked on fixing up croquet loading issues, developing separate controls for human and robot players, as well as recording footage for the demo video.</p>
+        </li>
+      </ul>
+<p>This week we worked on integrating our individual code for tasks and interactions into a single codebase for the MVP (check out our codebase on GitLab <a href="https://gitlab.cs.washington.edu/cse481v-21sp/team3"> here</a>), fixed a couple bugs, added final touches for the demo. Together, we worked on getting our demo ready to present by creating a script, adding our slides to the deck, and recording the key gameplay elements that we have been working on so far.
+ </p>
+	      
+<p>Here’s a link to our highly anticipated MVP! <a href="https://courses.cs.washington.edu/courses/cse481v/21sp/projects/team3/">https://courses.cs.washington.edu/courses/cse481v/21sp/projects/team3/</a>
+		  </p>
+		  <p>Or, you can watch our demo video here: <video width="450" height="270" controls=""><source src="https://drive.google.com/file/d/1A4hPeJ-KBQirCTmo5nicODEJoRnFg9yI/view?usp=sharing" type="video/mp4"></video></p>
+		  
+	      
+<p>Our plan for the upcoming week is to improve the player experience, especially by creating clear and distinct hand gestures, having smoother asset rendering, and including better textures, and working on the next level of the game where the robot and human meet. Individually, Timo will focus on making object positions shared between players so they can interact with each other in the same scene, either using Croquet physics or possibly migrating to Networked A-frame. Elana will be working to make player movement more intuitive for Oculus Quest 2 controllers by replacing our current teleportation component with a different one, as well as try to improve player interactions with objects by improving the grabbing mechanisms. Caelen will be working to resize our textures for our map model so the experience on the Oculus browser can be improved. Devika will be working on planning interactions for the next level in our app and will start building some of the interactions.</p>
+	      
+<p>Looking ahead, we know that we will need more rooms for future scenes and levels, so we worked on trying to find a way to possibly unload assets that were currently not in use for a scene. Since map size has been one of our main struggles for rendering the game on the Oculus, we wanted to be proactive in trying to solve this. A potential solution we are looking into is disposing of objects from previous levels when switching to a new level. We also faced issues with lighting for our scene this week. The lighting looks as expected in the desktop view, but doesn’t work on the headset which may be due to textures being too large. We are looking into compressing our models and textures for the map even more than we already have to see if that allows lights to reflect off of them.
+
  </p>
 	      </div>
     </div>

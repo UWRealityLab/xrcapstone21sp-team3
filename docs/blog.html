@@ -219,6 +219,47 @@
 
  </p>
 	      </div>
+	    
+	    <div class="blog-header" id="W6">Week 6</div>
+    <div class="horizontal-divider"></div>
+      <div class="blog-entry">
+	      <p>The following is what each team member accomplished this week:</p>
+	      <ul>
+        <li>
+		<p> Caelen repacked the map model with proportional textures to fix edge jittering in headset, inverted mesh normals to allow interior lighting in headset, and implemented level transition by toggling scene visibility.
+</p>
+        </li>
+	<li>
+		<p> Devika worked on adding blink-controls (that were eventually switched for joystick movement) and experimenting with zero gravity with a focus on smoother movement.
+</p>
+        </li>
+	<li>
+		<p> Elana researched how to implement zero gravity movement and began experimenting with A-frame physics and kinematic-body.
+</p>
+        </li>
+	<li>
+		<p> Timo experimented with Croquet physics to see if we would be able to use it with our app and he also started replacing Croquet with Networked A-frame once we decided to switch. 
+</p>
+        </li>
+      </ul>
+<p> We are planning on substituting Networked A-frame for Croquet to enable multiplayer functionality because we are having difficulties using physics with Croquet. As physics plays a major role in our game, we think Networked A-frame will give players a smoother experience when interacting in a shared environment. Additionally, we have started a branch to experiment with zero gravity movement, which can be found here(<a href="https://gitlab.cs.washington.edu/cse481v-21sp/team3/-/tree/zeroG">https://gitlab.cs.washington.edu/cse481v-21sp/team3/-/tree/zeroG</a>).
+ </p>
+	      
+<p> We decided to remove the teleportation functionality and only allow the player to use joystick movement to navigate the map. Additionally, we are beginning to plan for our final level and want to focus on implementing zero gravity movement before designing tasks for the players to “win” the game Here’s a video of our progress with zero gravity so far:
+</p>  
+	      
+<p> Additionally, we added the functionality for players to progress to the next level by unloading assets from the previous level and loading new assets. Here is a video demonstrating that functionality:
+</p>
+	      
+<p> We are also hoping to give each player a new “ability” that they did not have in the first level: we’re giving the “robot” character a laser cutter and the “human” character the ability to shoot fire and a freezing substance from their hands.
+</p>
+	      
+<p> Next week, we will continue experimenting with zero gravity movement, as well as with Networked A-frame. We will also start implementing the human’s and robot’s new abilities. Elana and Devika will continue researching zero gravity and work to make it a smoother experience for the players. Caelen and Timo will work on implementing Networked A-frame, as well as implementing the players’ new abilities if they have the time.
+</p>
+	      
+<p> We are working to allow players to move around in zero gravity and are having some issues with physics when the hands are involved. Currently, we are just relying on A-frame physics, but the motions are very jerky and aggressive. We will try experimenting with adding our own velocities when the users push against a wall or an object so that the movement is smoother, but any other suggestions for improving the movement are appreciated.
+</p>
+	      </div>
     </div>
     </article>
   </div>

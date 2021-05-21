@@ -64,6 +64,12 @@
             <span class="cd-label">Week 6</span>
           </a>
 	      </li>
+	      <li>
+		      <a href="#W7">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 7</span>
+          </a>
+	      </li>
       </ul>
     </nav>
 
@@ -264,6 +270,51 @@
 </p>
 	      
 <p> We are working to allow players to move around in zero gravity and are having some issues with physics when the hands are involved. Currently, we are just relying on A-frame physics, but the motions are very jerky and aggressive. We will try experimenting with adding our own velocities when the users push against a wall or an object so that the movement is smoother, but any other suggestions for improving the movement are appreciated.
+</p>
+	      </div>
+	    
+	    <div class="blog-header" id="W7">Week 7</div>
+    <div class="horizontal-divider"></div>
+      <div class="blog-entry">
+	      <p>The following is what each team member accomplished this week:</p>
+	      <ul>
+        <li>
+		<p>Caelen built the new abilities (fire beam, ice beam, and laser cutter) and created a quick demo to showcase for our practice demo day.
+
+</p>
+        </li>
+	<li>
+		<p>Devika worked on creating the push and pull movement in zero gravity.
+</p>
+        </li>
+	<li>
+		<p>Elana continued working on implementing zero gravity as well as working out some bugs in the transition between the first level and the second level.
+
+</p>
+        </li>
+	<li>
+		<p> Timo continued to integrate our code with Networked A-frame, requiring some reorganization of the code.
+
+</p>
+        </li>
+      </ul>
+<p>We merged the separate branches we were using to implement zero gravity and combined them so players can move between levels. We also added new abilities for the human player: ice beam and fire beam, which they can use to freeze and melt water. Here's a video of those abilities: <video width="450" height="270" controls=""><source src="./videos/" type="video/mp4"></video></p>
+	
+	<p>Additionally, we added a new ability for the robot character along with telekinesis: a laser cutter that can cut through certain materials. Here is a video of the laser cutter: <video width="450" height="270" controls=""><source src="./videos/" type="video/mp4"></video></p>
+	      
+	   <p>We plan on using these new abilities, along with zero gravity movement, to design our puzzles for the next (and final) level of the game. Additionally, we are still working on transitioning from Croquet to Networked A-frame for multiplayer functionality. Our progress so far can be found on <a href=”https://glitch.com/edit/#!/caramel-uttermost-machine”>this Glitch project</a>.
+ </p>
+	      
+<p> As mentioned above, we introduced the two abilities each player will have. For the first level, the robot player has the power of telekinesis, but not the laser cutter, and the human player receives the ice beam power to seal the crack in the window, but does not have the fire beam power. Therefore, we plan on giving each player their second ability in the second level and will introduce new puzzles and obstacles for the player. We are also adding the ability for the robot player to “die” and respawn if they touch water, which will be an added obstacle that the players will have to consider. Last, we would like to have some interesting puzzles that allow players to experience zero gravity movement with either grab and push mechanisms to move around or by using a “jetpack” that pushes them around.
+</p>  
+	      
+<p> Additionally, we added the functionality for players to progress to the next level by unloading assets from the previous level and loading new assets. Here is a video demonstrating that functionality: <video width="450" height="270" controls=""><source src="./videos/com.oculus.browser-20210513-230926.mp4" type="video/mp4"></video>
+</p>
+	      
+<p> Over the next week, we will design and implement the puzzles for the new level using the players’ new abilities and zero gravity movement. Caelen will create the respawn event for the robot player when it touches water and start building the puzzles. Devika will continue trying to implement the push and pull mechanism for players to move around in zero gravity, as well as start implementing some of the puzzles. Elana will work on enabling and disabling zero gravity when players move between levels and try to get kinematic-body to work well with the rest of the code. Timo will work on getting objects to move on both players’ screens in Networked A-frame and make some final touches on the networking.
+</p>
+	      
+<p> Over the past week we’ve had some problems with constraining the player’s movement using the kinematic-body component, as well as trouble implementing push and pull off of objects in zero gravity. Also, replacing our current networking with Networked A-frame required a good bit of code to be rewritten, but has been faster to develop as it is more straightforward with more documented support. 
 </p>
 	      </div>
     </div>

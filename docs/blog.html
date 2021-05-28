@@ -70,6 +70,12 @@
             <span class="cd-label">Week 7</span>
           </a>
 	      </li>
+	      <li>
+		      <a href="#W8">
+            <span class="cd-dot"></span>
+            <span class="cd-label">Week 8</span>
+          </a>
+	      </li>
       </ul>
     </nav>
 
@@ -312,6 +318,44 @@
 </p>
 	      
 <p> Over the past week we’ve had some problems with constraining the player’s movement using the kinematic-body component, as well as trouble implementing push and pull off of objects in zero gravity. Also, replacing our current networking with Networked A-frame required a good bit of code to be rewritten, but has been faster to develop as it is more straightforward with more documented support. 
+</p>
+	      </div>
+	    
+	    <div class="blog-header" id="W8">Week 8</div>
+    <div class="horizontal-divider"></div>
+      <div class="blog-entry">
+	      <p>The following is what each team member accomplished this week:</p>
+	      <ul>
+        <li>
+		<p>Caelen figured out multiplayer object syncing with the physics engine using Networked Aframe.
+
+</p>
+        </li>
+	<li>
+		<p>Devika did some final work on using a climbing mechanism for zero G and implemented part of the final level puzzles.
+
+</p>
+        </li>
+	<li>
+		<p>Elana looked into alternatives to kinematic-body if it stops working and implemented part of the final level puzzles.
+</p>
+        </li>
+	<li>
+		<p> Timo continued to integrate our code with Networked A-frame, requiring some reorganization of the code.
+
+</p>
+        </li>
+      </ul>
+<p>For zero gravity, we have decided not to use the climbing mechanism and just stick with a kinematic-body with a “jetpack” that allows the player to fly around. We occasionally have some issues with CANNON.js kinematic-body breaking our link, so we want to explore using ammo.js physics instead of CANNON.js physics. We will be working on <a href=”https://gitlab.cs.washington.edu/cse481v-21sp/team3/-/tree/ammo”>this branch</a> to convert physics in case it breaks the rest of our code.
+ </p>
+	      
+<p> We came up with our puzzles for the final level this week and implemented a large chunk of them. Our idea with the final puzzle was to combine the four abilities for both players and have them work together to supply power to the ship. The players must search the room for two batteries that they will place in the central terminal, which will then power the ship and allow the players to continue their journey through space!
+</p>  
+	      
+<p> Over the next week, we will finalize our final series of puzzles, replace Croquet with Networked A-frame, explore ammo.js as a replacement for CANNON.js, and add any last final touches to our app before our final video and code submission is due. Caelen will try out ammo.js instead of CANNON.js and work on adding Networked A-frame to our project. Devika will add some finishing touches to the final puzzle and create the obstacle course in the corridor to be done in zero gravity. Elana will change the final puzzle to use batteries instead of button presses to power the ship, work on an event that signals the end of the game and start making tutorial messages. Timo will be working on transferring the Networked A-frame Glitch project to our GitLab project and sync objects between players.
+</p>
+	      
+<p> We currently do not have any blocking issues, although we will be changing the underlying code for a lot of our app, which might cause some bugs. We will be working over the weekend to make these changes so we still have time to fix any bugs or errors that might occur. We will also save a copy of our current codebase in case the changes do not work with our code and need to revert it.   
 </p>
 	      </div>
     </div>

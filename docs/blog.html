@@ -341,12 +341,12 @@
 </p>
         </li>
 	<li>
-		<p> Timo continued to integrate our code with Networked A-frame, requiring some reorganization of the code.
+		<p> Timo worked on Networked A-frame integration and investigated Networked A-frame custom messages to handle in-game events.
 
 </p>
         </li>
       </ul>
-<p>For zero gravity, we have decided not to use the climbing mechanism and just stick with a kinematic-body with a “jetpack” that allows the player to fly around. We occasionally have some issues with CANNON.js kinematic-body breaking our link, so we want to explore using ammo.js physics instead of CANNON.js physics. We will be working on <a href=”https://gitlab.cs.washington.edu/cse481v-21sp/team3/-/tree/ammo”>this branch</a> to convert physics in case it breaks the rest of our code.
+<p>For zero gravity, we have decided not to use the climbing mechanism and just stick with a kinematic-body with a “jetpack” that allows the player to fly around. We occasionally have some issues with CANNON.js kinematic-body breaking our link, so we want to explore using ammo.js physics instead of CANNON.js physics. We will be working on <a href=”https://gitlab.cs.washington.edu/cse481v-21sp/team3/-/tree/ammo”>this branch</a> to convert physics in case it breaks the rest of our code. As for networking and multiplayer, we’ve figured out how to sync object physics between clients using networked a-frame and are working on creating templates and scripts to bring it into the game.
  </p>
 	      
 <p> We came up with our puzzles for the final level this week and implemented a large chunk of them. Our idea with the final puzzle was to combine the four abilities for both players and have them work together to supply power to the ship. The players must search the room for two batteries that they will place in the central terminal, which will then power the ship and allow the players to continue their journey through space!

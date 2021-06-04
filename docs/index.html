@@ -1,72 +1,111 @@
-<!doctype html>
-<html lang="en-US">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  
-  <link rel="stylesheet" href="style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-  <script src="/time-machine/assets/js/script.js"></script>
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+<style>
+body, html {
+  height: 100%;
+  font-family: "Inconsolata", sans-serif;
+}
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Event Horizon | AR/VR Capstone</title>
-<meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="Time Machine theme" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="Time Machine is a theme for GitHub Pages." />
-<meta property="og:description" content="Time Machine is a theme for GitHub Pages." />
-<link rel="canonical" href="https://pages-themes.github.io/time-machine/" />
-<meta property="og:url" content="https://pages-themes.github.io/time-machine/" />
-<meta property="og:site_name" content="Time Machine theme" />
-<script type="application/ld+json">
-{"description":"Time Machine is a theme for GitHub Pages.","@type":"WebSite","headline":"Time Machine theme","url":"https://pages-themes.github.io/time-machine/","name":"Time Machine theme","@context":"https://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-</head>
+.bgimg {
+  background-position: center;
+  background-size: cover;
+  background-image: url("/images/space.jpg");
+  min-height: 75%;
+}
 
+.menu {
+  display: none;
+}
+</style>
 <body>
-  <div class="wrapper">
-    <header>
-      <h1 class="title">Event Horizon</h1>
-    </header>
-    <div id="container">
-      <p style="color:black" class="tagline">Event Horizon is a two-player cooperative VR game that takes place on a dying space station. The two players must work together to fix the station so they can continue on their intergalactic journey.</p>
-      <p style="color:black" class="tagline">Event Horizon works with the Oculus Quest 2 and can be accessed through the Oculus Browser.</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://courses.cs.washington.edu/courses/cse481v/21sp/projects/team3/" class="download-button"><span>View Project</span></a>
-          
-          <p style="color:white">Try out EVENT HORIZON here:</p>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
 
-<img src="./images/event horizon demo image.PNG">
-
-<h1 id="header-1"><a href="blog.html">Blog</a></h1>
-          
-<h1 id="header-1"><a href="teambios.html">Meet the Team!</a></h1>
-          
-<h1 id="header-1"><a href="https://docs.google.com/document/d/1L1R6KDe2fKX-x0AnGHcQj6KOr5SLTnCKr-LeSUIglbU/edit?usp=sharing">Project Requirements Document</a></h1>
-
-
-        </article>
-      </div>
+<!-- Links (sit on top) -->
+<div class="w3-top">
+  <div class="w3-row w3-padding w3-black">
+    <div class="w3-col s3">
+      <a href="#" class="w3-button w3-block w3-black">HOME</a>
     </div>
-    <footer>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
+    <div class="w3-col s3">
+      <a href="blog.html" class="w3-button w3-block w3-black">BLOG</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="#meet-the-team" class="w3-button w3-block w3-black">MEET THE TEAM</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="https://docs.google.com/document/d/1L1R6KDe2fKX-x0AnGHcQj6KOr5SLTnCKr-LeSUIglbU/edit?usp=sharing" class="w3-button w3-block w3-black">PRD</a>
+    </div>
   </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/pages-themes/time-machine/tarball/master" class="tar">tar</a><a href="https://github.com/pages-themes/time-machine/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
+</div>
 
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-display-middle w3-center">
+    <span class="w3-text-white" style="font-size:90px">E<span style="color: red">V</span>ENT<br>HO<span style="color: red">R</span>IZON</span>
+  </div>
+</header>
+
+<!-- Add a background color and large text to the whole page -->
+<div class="w3-sand w3-grayscale w3-large">
+
+<!-- About Container -->
+<div class="w3-container" id="about">
+  <div class="w3-content" style="max-width:700px">
+    <h3 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">ABOUT THE GAME</span></h3>
+    <p>Event Horizon is a two-player cooperative VR game that takes place on a dying space station. The two players must work together to fix the station so they can continue on their intergalactic journey.</p>
+    <div class="w3-panel w3-leftbar w3-light-grey">
+      <p><i>Event Horizon works with the Oculus Quest 2 and can be accessed through the Oculus Browser.</i></p>
+    </div>
+    <p class="w3-center"><button class="w3-button w3-black"> <a href="https://glitch.com/edit/#!/event-horizon">VIEW ON GLITCH</a></button>&#9;<button class="w3-button w3-black"><a href="https://event-horizon.glitch.me/">TRY THE DEMO</a></button></p>
+  </div>
+</div>
+
+<!-- Meet the Team -->
+<div class="w3-container" id="meet-the-team">
+  <div class="w3-content" style="max-width:700px">
+ 
+    <h3 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">MEET THE TEAM</span></h3>
   
+  	<article class="w3-center">          
+  		<img src="" style="width:100%;max-width:500px;margin-top:32px;">
+        <h2 id="header-1">Caelen Wang</h2>
+        <p> I'm a senior computer science student with an interest in developing computer graphics and virtual reality applications. 
+          I'm excited to explore the intersection of computer science and experimental arts in order to create novel experiences across 
+          different mediums. When I'm not rock climbing or snowboarding, you can find me in my Oculus headset or playing League of Legends.</p>
+		
+      <img src="" style="width:100%;max-width:500px;margin-top:32px;">
+        <h2 id="header-1">Devika Baliga</h2>
+        <p>Hi! I'm a third year undergrad at the Allen School majoring in Computer Science, and I'm so excited to try developing
+          apps to create VR experiences! My interests outside of school include reading, hiking, and cooking.</p>
+
+		  <img src="" style="width:100%;max-width:500px;margin-top:32px;">
+        <h2 id="header-1">Elana Hummel</h2>
+        <p>Hello! I'm a senior in the Allen School majoring in Computer Engineering and I'm really looking forward to learning more
+          about developing apps for AR and VR! Outside of school I enjoy reading, watching TV shows, and playing games on my Switch :)</p>
+
+		  <img src="" style="width:100%;max-width:500px;margin-top:32px;">
+        <h2 id="header-1">Timo Lahtinen</h2>
+        <p> Hi! I'm a senior undergraduate student studying computer engineering. 
+          I'm excited to try out VR hardware and design our own software to run on it! 
+          Outside of the project, my interests are in science fiction, history, and perfecting my burger making technique. 
+          Ask me about any of these, and I'll talk your ears off!</p>
+  	</article>
+  </div>
+</div>
+
+
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-light-grey w3-padding-48 w3-large">
+	<a href="#top">Scroll to top</a>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+
 </body>
 </html>

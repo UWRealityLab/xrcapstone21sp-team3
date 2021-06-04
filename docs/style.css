@@ -1,16 +1,4 @@
-.blog-header {
-  font-size: 2rem;
-  font-weight: bold;
-}
 
-.horizontal-divider {
-  width: 100%;
-  margin: 0 auto;
-  height: 2px;
-  border-radius: 2px;
-  background-color: rgb(99, 165, 42);
-  margin: 1rem 0;
-}
 #cd-vertical-nav {
   position: fixed;
   /*z-index: 1;*/

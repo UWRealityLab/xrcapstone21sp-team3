@@ -1,11 +1,11 @@
 #cd-vertical-nav {
   position: fixed;
   /*z-index: 1;*/
-  right: 10%;
-  bottom: 50%;
-  /*width: 90%;*/
-  /*max-width: 400px;*/
-  /*max-height: 90%;*/
+  right: 5%;
+  bottom: auto;
+  width: 90%;
+  max-width: 400px;
+  max-height: 90%;
   /*transform: scale(0);*/
   /*transition-property: transform;*/
   /*transition-duration: 0.2s;*/

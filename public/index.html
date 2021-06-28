@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="./style.css" rel="stylesheet" type="text/css">  
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Event Horizon</title>
+    </head>
+  
+    <body>
+        <!--   Form for specifiying the room.  -->
+        <div class="row">
+            <div class="column left gameName">
+                <div class ="gameName">
+                    <span style="color: white">HO</span><span style="color: red">R</span><span style="color: white">IZON</span>
+                </div>
+                <div class ="gameName ev">
+                    <span style="color: white">E</span><span style="color: red">V</span><span style="color: white">ENT</span>
+                </div>
+            </div>
+            <div class="column gameName"></div>
+            <div class="column right">
+                <p>
+                    Event Horizon is a 2-player co-op environment puzzle VR game. 
+                    The players take on the roles of a human and a robot aboard a derelict spaceship. 
+                    The unlikely duo must unite and utilize their unique abilities to repair the ship, 
+                    so they can continue their intergalactic journey.
+                    <br><br>
+                    Choose a unique room name and share it with a friend. Have fun!
+                </p>
+                <form action="./scene.html" class="login-form" method="GET">  
+                    <div style="width: 400px;">
+                        <div>
+                            <input id="room" name="room" placeholder="Enter room name" type="text" required /> 
+                        </div>
+                    </div>
+                    <button type="submit"> Join Room </button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

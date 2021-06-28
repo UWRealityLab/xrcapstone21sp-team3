@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <title>Event Horizon</title>
+
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-extras/dist/aframe-physics-extras.min.js"></script>
+    <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/oneWaveAdrian/aframe-particle-system-component@aframe-1.2.0-upgrade/dist/aframe-particle-system-component.min.js"></script>
+    <script src="./thirdparty/aframe-super-shooter-kit.min.js"></script>  
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+    <script src="https://unpkg.com/open-easyrtc@^2.0.5/api/easyrtc.js"></script>
+    <script src="https://unpkg.com/networked-aframe@^0.8.0/dist/networked-aframe.min.js"></script>
+    <script src="./thirdparty/dynamic-room.js"></script>  
+
+    <script src="./scripts/connect-callback.js"></script>
+    <script src="./scripts/character-select.js"></script>
+    <script src="./scripts/injection.js"></script>
+    <script src="./scripts/human-powers.js"></script>
+    <script src="./scripts/hit-handler.js"></script>
+    <script src="./scripts/turn-off-lights.js"></script>
+    <script src="./scripts/light-switch.js"></script>
+    <script src="./scripts/show-spring.js"></script>
+    <script src="./scripts/plug-in.js"></script>
+    <script src="./scripts/button-press.js"></script>
+    <script src="./scripts/slideshow.js"></script>
+    <script src="./scripts/open-door.js"></script>
+    <script src="./scripts/change-scene.js"></script>
+    <script src="./scripts/freeze-melt.js"></script>
+    <script src="./scripts/laser-cutter.js"></script>
+    <script src="./scripts/laser-activate.js"></script>
+    <script src="./scripts/magnet-activate.js"></script>
+    <script src="./scripts/upgrade.js"></script>
+    <script src="./scripts/change-owner.js"></script>
+    <script src="./scripts/battery-plug.js"></script>
+    <script src="./scripts/battery-unplug.js"></script>
+    <script src="./scripts/end-game.js"></script>
+    <script src="./scripts/melt-ice-block.js"></script>
+    <script src="./scripts/respawn-robot.js"></script>
+</head>
+<body>
+<a-scene cursor="rayOrigin: mouse"
+         physics
+         dynamic-room
+>
+    <a-assets>
+        <img id="menu-bg" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fmeun_background.png?v=1624398550421" crossorigin="anonymous">
+        <img id="menu-human" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fmenu_human.PNG?v=1624399919838" crossorigin="anonymous">
+        <img id="menu-robot" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fmenu_robot.PNG?v=1624400309394" crossorigin="anonymous">
+        <img id="menu-spectator" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fmenu_spectator.PNG?v=1624400382642" crossorigin="anonymous">
+      
+        <img id="sky-box" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fspace.jpg?v=1623003382299" crossorigin="anonymous">
+        <img id="door-texture" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fdoor.jpg?v=1623003396110" crossorigin="anonymous">
+        <img id="arrow" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Farrow.jpg?v=1623003406275" crossorigin="anonymous">
+        <img id="power" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fpower.png?v=1623003417690" crossorigin="anonymous">
+        <img id="floor-plan-1" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Froom1.png?v=1623003433251" crossorigin="anonymous">
+        <img id="floor-plan-2" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Froom2.png?v=1623003443893" crossorigin="anonymous">
+        <img id="floor-plan-3" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Froom3.png?v=1623003453921" crossorigin="anonymous">
+        <img id="floor-plan-4" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Froom4.png?v=1623003468382" crossorigin="anonymous">
+        <img id="floor-plan-5" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Froom5.png?v=1623003478170" crossorigin="anonymous">
+        <img id="bot-hand-left" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fbot_hand_left.png?v=1623003491253" crossorigin="anonymous">
+        <img id="bot-hand-right" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fbot_hand_right.png?v=1623003504068" crossorigin="anonymous">
+        <img id="full_power" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Ffull_power.png?v=1623003517028" crossorigin="anonymous">
+        <img id="no_power" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fno_power.png?v=1623003528422" crossorigin="anonymous">
+        <img id="power_one" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fpower_one.png?v=1623003537966" crossorigin="anonymous">
+        <img id="power_two" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fpower_two.png?v=1623003546834" crossorigin="anonymous">
+        <img id="fire-beam-diagram" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Ffire_beam_diagram.jpg?v=1623003691034" crossorigin="anonymous">
+        <img id="flashlight-diagram" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fflashlight_diagram.jpg?v=1623003705185" crossorigin="anonymous">
+        <img id="freeze-diagram" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Ffreeze_diagram.jpg?v=1623003719028" crossorigin="anonymous">
+        <img id="ice-beam-diagram" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fice_beam_diagram.jpg?v=1623003729722" crossorigin="anonymous">
+        <img id="laser-diagram" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Flaser_diagram.jpg?v=1623003747848" crossorigin="anonymous">
+        <img id="magnet-diagram" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fmagnet_diagram.jpg?v=1623003761225" crossorigin="anonymous">
+        <video id="hyperspace-jump" muted src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fhyperspace-jump.mp4?v=1623003777197" crossorigin="anonymous"></video>
+      
+        <a-asset-item id="human-glb" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2FhumanHead.glb?v=1623003797886"></a-asset-item>
+        <a-asset-item id="human-lefthand-glb" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fhuman_left_hand.glb?v=1622413932006"></a-asset-item>
+        <a-asset-item id="human-righthand-glb" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fhuman_right_hand.glb?v=1622413971241"></a-asset-item>
+        <a-asset-item id="robot-glb" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2FrobotHead.glb?v=1623003819377"></a-asset-item>
+        <a-asset-item id="robot-lefthand-glb" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Frobot_left_hand.glb?v=1622416309287"></a-asset-item>
+        <a-asset-item id="robot-righthand-glb" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Frobot_right_hand.glb?v=1622416309073"></a-asset-item>
+        <a-asset-item id="asteroid" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fasteroid.glb?v=1624398007055"></a-asset-item>
+
+        <a-asset-item id="map" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fmap_inv.glb?v=1623003853653"></a-asset-item>
+        <!--<a-asset-item id="mapu" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fmap.glb?v=1622313604914"></a-asset-item>-->
+        <a-asset-item id="lamp-b" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Flamp_b.glb?v=1624404008157"></a-asset-item>
+        <a-asset-item id="syringe-glb" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fsyringe.glb?v=1623003869810"></a-asset-item>
+        <a-asset-item id="flashlight-glb" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fflashlight.glb?v=1623003883053"></a-asset-item>
+        <a-asset-item id="terminal-1" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fterminal_1.glb?v=1623003903247"></a-asset-item>
+        <a-asset-item id="terminal-2" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fterminal_2.glb?v=1623003966904"></a-asset-item>
+        <a-asset-item id="magnet" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fmagnet.glb?v=1623004016654"></a-asset-item>
+        <a-asset-item id="monitor" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fmonitor.glb?v=1623004030393"></a-asset-item>
+        <a-asset-item id="crate-a" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fcrate_a.glb?v=1623004045622"></a-asset-item>
+        <a-asset-item id="crate-b" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fcrate_b.glb?v=1623004056459"></a-asset-item>
+        <a-asset-item id="pipe-c" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fpipeline_c.glb?v=1623004073029"></a-asset-item>
+        <a-asset-item id="door-a" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fdoor_a.glb?v=1623004085664"></a-asset-item>
+        
+        <a-asset-item id="mapTwo" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fmap2_inv.glb?v=1623004124491"></a-asset-item>
+        <!--<a-asset-item id="mapuTwo" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fmap2.glb?v=1622313604826"></a-asset-item>-->
+        <a-asset-item id="lamp-a" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Flamp_a.glb?v=1624405684965"></a-asset-item>
+        <a-asset-item id="laser-gun" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Flaser_gun.glb?v=1623004137471"></a-asset-item>
+        <a-asset-item id="support-a" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fsupport_a.glb?v=1623004155637"></a-asset-item>
+        <a-asset-item id="pipe-a" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fpipeline_a.glb?v=1623004171563"></a-asset-item>
+        <a-asset-item id="pipe-b" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fpipeline_b.glb?v=1624409295426"></a-asset-item>
+        <a-asset-item id="battery" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fenergy_battery_a.glb?v=1622566844132"></a-asset-item>
+
+        <!-- player templates -->
+        <template id="rig-template">
+            <a-entity></a-entity>
+        </template>
+
+        <template id="human-head-template">
+            <a-entity>
+                <a-gltf-model src="#human-glb" position="0 -1 0" rotation="-10 180 0" scale="1.5 1.5 1.5"></a-gltf-model>
+            </a-entity>
+        </template>
+      
+        <template id="human-lh-template">
+            <a-entity>
+                <a-gltf-model src="#human-lefthand-glb" rotation="0 0 90"></a-gltf-model>
+            </a-entity>
+        </template>
+      
+        <template id="human-rh-template">
+            <a-entity>
+                <a-gltf-model src="#human-righthand-glb" rotation="0 0 -90"></a-gltf-model>
+            </a-entity>
+        </template>
+
+        <template id="robot-lh-template">
+            <a-entity>
+                <a-gltf-model src="#robot-lefthand-glb" rotation="0 0 90"></a-gltf-model>
+            </a-entity>
+        </template>
+      
+        <template id="robot-rh-template">
+            <a-entity>
+                <a-gltf-model src="#robot-righthand-glb" rotation="0 0 -90"></a-gltf-model>
+            </a-entity>
+        </template>      
+      
+        <template id="robot-head-template">
+            <a-entity>
+                <a-gltf-model src="#robot-glb" position="0 -0.5 0" rotation="-10 180 0" scale="0.5 0.5 0.5"></a-gltf-model>
+            </a-entity>
+        </template>
+
+        <template id="human-lefthand-template">
+            <a-entity id="humanLeftHand"
+                      shooter="activeBulletType: ice; bulletTypes: ice"
+            >
+                <a-entity class="ability"
+                          human-powers
+                          particle-system="preset: default; color: #ffffff; texture: https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fice.png?v=1623004657913; accelerationValue: 0 0 0; accelerationSpread: 0 0 0; velocityValue: 0 0 -2; velocitySpread: 1 1 0.5; maxAge: 1; size: 0.5; maxParticleCount: 500; opacity: 0.5; enabled: false"
+                ></a-entity>
+            </a-entity>
+        </template>
+      
+        <template id="human-righthand-template">
+            <a-entity id="humanRightHand"
+                      shooter="activeBulletType: fire; bulletTypes: fire"
+            >
+                <a-entity class="ability"
+                          human-powers
+                          particle-system="preset: default; color: #ffffff; texture: https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Ffire.png?v=1623004671854; accelerationValue: 0 0 0; accelerationSpread: 0 0 0; velocityValue: 0 0 -2; velocitySpread: 1 1 0.5; maxAge: 1; size: 0.5; maxParticleCount: 500; opacity: 0.5; enabled: false"
+                ></a-entity>
+            </a-entity>
+        </template>
+      
+        <template id="robot-lefthand-template">
+            <a-entity id="robotLeftHand"
+                      raycaster="objects: .cuttable; far: 2; enabled: false; showLine: false; lineColor: red; origin: -0.055 0 0"
+            >
+                <a-gltf-model class="ability"
+                              laser-activate
+                              src="#laser-gun" position="-0.045 0.05 0.1" rotation="-90 90 0" scale="0.002 0.002 0.002" visible="false"
+                ></a-gltf-model>
+            </a-entity>
+        </template>
+      
+        <template id="robot-righthand-template">
+            <a-entity id="robotRightHand"></a-entity>
+        </template>
+      
+        <template id="robot-righthandmagnet-template">
+            <a-entity id="robotRightHandMagnet"
+                      raycaster="objects: .debris; far: 2; enabled: false; showLine: false; origin: 0.03 0 -0.05"
+            >
+                <a-gltf-model class="ability"
+                              magnet-activate
+                              src="#magnet" position="0.03 0 0.05" rotation="90 90 0" scale="0.01 0.01 0.01" visible="false"
+                ></a-gltf-model>
+                <a-entity class="ability-2"
+                          line="start: 0.03 -0.03 -0.03; end: 0.03 0 -0.05; color: white; visible: false"
+                          line__2="start: 0.03 0.03 -0.03; end: 0.03 0 -0.05; color: white; visible: false"
+                ></a-entity>
+            </a-entity>
+        </template>
+      
+        <template id="spectator-head-template">
+            <a-entity>
+                <a-gltf-model src="#asteroid" scale="0.001 0.001 0.001"></a-gltf-model>
+            </a-entity>
+        </template>
+
+        <!-- human object templates -->
+        <template id="map-template">
+            <a-entity></a-entity>
+        </template>
+      
+        <template id="door-template">
+            <a-box open-door static-body scale="0.25 4 8" src="#door-texture"></a-box>
+        </template>
+
+        <template id="tetrahedron-template">
+            <a-tetrahedron change-owner grabbable scale="0.1 0.1 0.1" color="#FFC65D"></a-tetrahedron>
+        </template>
+
+        <template id="torus-template">
+            <a-torus change-owner grabbable scale="0.07 0.07 0.07" color="#4CC3D9"></a-torus>
+        </template>
+
+        <template id="box-template">
+            <a-box change-owner grabbable scale="0.1 0.1 0.1" color="#EF2D5E"></a-box>
+        </template>
+
+        <template id="dodecahedron-template">
+            <a-dodecahedron change-owner grabbable scale="0.1 0.1 0.1" color="#7BC8A4"></a-dodecahedron>
+        </template>
+
+        <template id="syringe-template">
+            <a-cylinder change-owner grabbable height="0.175" radius="0.01" material="opacity: 0">
+                <a-gltf-model src="#syringe-glb" position="0 0.045 0" rotation="0 0 -90" scale="0.01 0.01 0.01"></a-gltf-model>
+                <a-box position="0 0.215 0" scale="0.001 0.001 0.001" material="opacity: 0"></a-box>
+            </a-cylinder>
+        </template>
+      
+        <template id="flashlight-template">
+            <a-cylinder change-owner grabbable="endButtons: gripup, gripopen, triggerup" geometry="height: 0.25; radius: 0.05" rotation="0 0 180">
+                <a-entity light-switch geometry="primitive: sphere; radius: 0.05" light="type: spot; intensity: 0; angle: 45; distance: 10; decay: 2" position="0 -0.12 0" rotation="-90 0 0"></a-entity>
+                <a-gltf-model src="#flashlight-glb" position="0 0.01 0" rotation="90 0 0" scale="0.01 0.01 0.003"></a-gltf-model>
+            </a-cylinder>
+        </template>
+      
+        <template id="wire-template">
+            <a-box change-owner grabbable scale="0.3 0.3 0.3">
+                <a-box static-body collision-filter="collisionForces: false" position="0.2 -0.75 0" scale="0.2 0.5 0.6" color="grey"></a-box>
+                <a-box static-body collision-filter="collisionForces: false" position="-0.2 -0.75 0" scale="0.2 0.5 0.6" color="grey"></a-box>
+            </a-box>
+        </template>
+
+        <!-- robot object templates -->
+        <template id="monitorModel-template">
+            <a-entity position="-15.5 1 16" rotation="0 90 0" scale="0.075 0.075 0.075"></a-entity>
+        </template>
+      
+        <template id="monitor-template">
+            <a-plane material="opacity: 0" src="https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Froom1.png?v=1623003433251" slideshow width="60" height="30"></a-plane>
+        </template>
+      
+        <template id="plug-template">
+            <a-box change-owner grabbable scale="2.5 2.5 2.5">
+                <a-box static-body collision-filter="collisionForces: false" position="0.2 0 0.75" scale="0.2 0.6 0.5" color="grey"></a-box>
+                <a-box static-body collision-filter="collisionForces: false" position="-0.2 0 0.75" scale="0.2 0.6 0.5" color="grey"></a-box>
+            </a-box>
+        </template>
+      
+        <template id="crate-a-template">
+            <a-gltf-model class="debris" grabbable src="#crate-a"></a-gltf-model>
+        </template>
+
+        <template id="crate-b-template">
+            <a-gltf-model class="debris" grabbable scale="0.7 0.7 0.7" src="#crate-b"></a-gltf-model>
+        </template>
+
+        <template id="pipe-c-template">
+            <a-gltf-model class="debris" grabbable scale="1.5 1.5 1.5" src="#pipe-c"></a-gltf-model>
+        </template>
+
+        <template id="door-a-template">
+            <a-gltf-model class="debris" grabbable scale="0.6 0.6 0.6" src="#door-a"></a-gltf-model>
+        </template>
+
+        <template id="doorway-template">
+            <a-gltf-model src="#support-a" scale="0.5 0.5 0.5">
+                <a-box static-body position="0 3 1.7" width="1" height="6" depth="1.5" material="opacity: 0"></a-box>
+                <a-box static-body position="0 3 -2.3" width="1" height="6" depth="1" material="opacity: 0"></a-box>
+            </a-gltf-model>
+        </template>
+      
+        <template id="beam-template">
+            <a-gltf-model src="#pipe-a" laser-cutter body="type: dynamic; shape: none; mass: 0" shape="shape: cylinder; height: 3; radiusTop: 0.25; radiusBottom: 0.25" rotation="90 0 0"></a-gltf-model>
+        </template>
+      
+        <template id="cuttable-template">
+            <a-cylinder class="cuttable" color="red" radius="0.075" height="0.33"></a-cylinder>
+        </template>
+      
+        <template id="battery-template">
+            <a-cylinder class="battery" battery-unplug change-owner grabbable height="0.75" radius="0.25" material="opacity: 0">
+                <a-gltf-model src="#battery" position="0 -0.35 0" scale="0.5 0.5 0.5"></a-gltf-model>
+            </a-cylinder>
+        </template>
+      
+        <template id="character-select-template">
+            <a-entity>
+                <a-plane class="menu" character-select position="999 -999 -5" height="10.356" width="19.2" shader="flat" src="#menu-bg">
+                    <a-plane class="human-button" position="-3 -0.5 0.2" height="3" width="2" shader="flat" src="#menu-human"></a-plane>
+                    <a-plane class="robot-button" position="0 -0.5 0.2" height="3" width="2" shader="flat" src="#menu-robot"></a-plane>
+                    <a-plane position="3 -0.5 0.2" height="3" width="2" shader="flat" src="#menu-spectator"></a-plane>
+                    <a-plane position="-3.05 -0.5 0.1" height="3.25" width="2.25" shader="flat" color="green" visible="false"></a-plane>
+                    <a-plane position="0 -0.5 0.1" height="3.25" width="2.25" shader="flat" color="green" visible="false"></a-plane>
+                    <a-plane position="3.05 -0.5 0.1" height="3.25" width="2.25" shader="flat" color="green" visible="false"></a-plane>
+                    <!--<a-plane position="0 -3 0.2" height="1" width="1" shader="flat" color="green"></a-plane>-->
+                </a-plane>
+            </a-entity>
+        </template>
+      
+        <!-- bullet templates -->
+        <a-entity id="iceBullet" bullet="name: ice; maxTime: 0.25" geometry="primitive: sphere; radius: 0.25" material="opacity: 0"></a-entity>
+        <a-entity id="fireBullet" bullet="name: fire; maxTime: 0.25" geometry="primitive: sphere; radius: 0.25" material="opacity: 0"></a-entity>
+    </a-assets>
+
+    <!-- CHARACTER SELECT MENU TEXT -->
+    <a-plane position="999 -999 -5" material="opacity: 0">
+        <a-text position="-2 3 0.1" scale="2 2 2" color="white" value="Character Selection"></a-text>
+        <a-text position="-2.4 2 0.1" color="white" value="choose a role in browser, then click the VR button"></a-text>
+        <a-text position="-3.35 -1.7 0.2" color="white" value="Human"></a-text>
+        <a-text position="-0.3 -1.7 0.2" color="white" value="Robot"></a-text>
+        <a-text position="2.53 -1.7 0.2" color="white" value="Spectator"></a-text>
+    </a-plane>
+  
+    <!-- PLAYER -->
+    <a-entity id="rig"
+              networked="template: #rig-template"
+              movement-controls="enabled: false"
+              position="999 -1000 0"
+    >
+        <a-entity id="camera"
+                  camera
+                  look-controls="enabled: false"
+                  position="0 1 0"
+        ></a-entity>
+      
+        <a-entity id="leftHand"
+                  hand-controls="hand: left"
+                  super-hands="grabStartButtons: gripclose, gripdown, triggerdown, abuttondown, xbuttondown; 
+                               grabEndButtons: gripopen, gripup, triggerup, abuttonup, xbuttonup"
+                  static-body="shape: sphere; sphereRadius: 0.05"
+                  sphere-collider="objects: a-plane, a-sphere, a-box, a-cylinder, a-tetrahedron, a-torus, a-dodecahedron"
+                  physics-collider
+        >
+            <a-entity id="leftHandModel" visible="false"></a-entity>
+        </a-entity>
+      
+        <a-entity id="rightHand"
+                  hand-controls="hand: right"
+                  super-hands="grabStartButtons: gripclose, gripdown, triggerdown, abuttondown, xbuttondown; 
+                               grabEndButtons: gripopen, gripup, triggerup, abuttonup, xbuttonup"
+                  static-body="shape: sphere; sphereRadius: 0.05"
+                  sphere-collider="objects: a-plane, a-sphere, a-box, a-cylinder, a-tetrahedron, a-torus, a-dodecahedron"
+                  physics-collider
+        >
+            <a-entity id="rightHandModel" visible="false"></a-entity>
+        </a-entity>
+    </a-entity>
+
+    <!-- SCENE -->
+    <a-sky src="#sky-box"></a-sky>
+    <a-videosphere end-game visible="false" rotation="0 0 0" src="#hyperspace-jump"></a-videosphere>
+  
+    <a-light type="ambient" intensity="0.05"></a-light>
+
+    <a-entity id="scene1" visible="true" networked="template: #map-template">
+        <a-gltf-model id="map1" src="#map" rotation="0 90 0" networked="template: #map-template">
+            <!-- walls -->
+            <a-box id="floor1" static-body position="4.5 0 16" depth="8.5" height="0.5" width="40" material="opacity: 0"></a-box>
+            <a-box id="floor2" static-body position="20 0 6" rotation="0 90 0" depth="8.5" height="0.5" width="28" material="opacity: 0"></a-box>
+            <a-box id="floor3" static-body position="22.5 0 -12" rotation="0 90 0" depth="4.5" height="0.5" width="8" material="opacity: 0"></a-box>
+            <a-box id="room1wall1" static-body position="4.5 2 20" depth="0.5" height="5" width="40" material="opacity: 0"></a-box>
+            <a-box id="room1wall2" static-body position="-15.5 2 16" depth="8.5" height="5" width="0.5" material="opacity: 0"></a-box>
+            <a-box id="room1wall3" static-body position="0 2 12.2" depth="0.5" height="5" width="32" material="opacity: 0"></a-box>
+            <a-box id="room2wall1" static-body position="24.5 2 2" depth="37" height="5" width="0.5" visible="false"></a-box>
+            <a-box id="room2wall2" static-body position="16.4 2 2" depth="20" height="5" width="0.5" material="opacity: 0"></a-box>
+            <a-box id="room2wall3" static-body position="18 2 -7.8" depth="0.5" height="5" width="4" material="opacity: 0"></a-box>
+            <a-box id="room2wall4" static-body position="22.25 2 -16.25" depth="0.5" height="5" width="5" material="opacity: 0"></a-box>
+            <a-box id="room2wall5" static-body position="20.4 2 -12" depth="8" height="5" width="0.5" material="opacity: 0"></a-box>
+
+            <!-- lights -->
+            <a-entity position="22.5 4 -12" light="type: point; intensity: 0.75; distance: 10" turn-off-lights>
+                <a-gltf-model src="#lamp-b" position="0 0.2 0" rotation="180 90 0"></a-gltf-model>
+            </a-entity>
+            <a-entity position="20.25 4 0" light="type: point; intensity: 0.75; distance: 10" turn-off-lights>
+                <a-gltf-model src="#lamp-b" position="0 0.2 0" rotation="180 90 0"></a-gltf-model>
+            </a-entity>
+            <a-entity position="20.25 4 8" light="type: point; intensity: 0.75; distance: 10" turn-off-lights>
+                <a-gltf-model src="#lamp-b" position="0 0.2 0" rotation="180 90 0"></a-gltf-model>
+            </a-entity>
+            <a-entity position="20.25 4 16" light="type: point; intensity: 0.75; distance: 10" turn-off-lights>
+                <a-gltf-model src="#lamp-b" position="0 0.2 0" rotation="180 90 0"></a-gltf-model>
+            </a-entity>
+            <a-entity position="12 4 16" light="type: point; intensity: 0.75; distance: 10" turn-off-lights>
+                <a-gltf-model src="#lamp-b" position="0 0.2 0" rotation="180 0 0"></a-gltf-model>
+            </a-entity>
+            <a-entity position="-2 4 16" light="type: point; intensity: 0.75; distance: 10" turn-off-lights>
+                <a-gltf-model src="#lamp-b" position="0 0.2 0" rotation="180 0 0"></a-gltf-model>
+            </a-entity>
+            <a-entity position="-10 4 16" light="type: point; intensity: 0.75; distance: 10" turn-off-lights>
+                <a-gltf-model src="#lamp-b" position="0 0.2 0" rotation="180 0 0"></a-gltf-model>
+            </a-entity>
+          
+            <!-- HUMAN START -->
+
+            <!-- desk surface -->
+            <a-box static-body position="19.125 0.6 5" rotation="-90 0 0" width="1" height="2.5" material="opacity: 0"></a-box>
+            <a-box static-body position="18.2 0.6 4.2" rotation="-90 0 0" width="1" height="1" material="opacity: 0"></a-box>
+            <a-box static-body position="18.55 0.6 -3.825" rotation="-90 0 0" width="2.5" height="1" material="opacity: 0"></a-box>
+            <a-box static-body position="19.325 0.6 -4.75" rotation="-90 0 0" width="1" height="1" material="opacity: 0"></a-box>
+          
+            <!-- chairs -->
+            <a-box static-body position="18.125 0.6 -5.25" width="0.7" height="2" depth="0.8" material="opacity: 0"></a-box>
+            <a-box static-body position="17.7 0.6 5.7" width="0.7" height="2" depth="0.8" material="opacity: 0"></a-box>
+
+            <!-- ice syringe pedestal -->
+            <a-box id="ice-pedestal" static-body position="22.4 0.6 -13" height="1" width="0.5" depth="0.5" color="#96D9D6"></a-box>
+
+            <a-plane position="22.4 2.5 -15.8" width="3.25" height="2.5" material="color:black">
+                <a-plane src="#ice-beam-diagram" position="0 0 0.1" width="4" height="3" scale="0.75 0.75 0.75"></a-plane>
+            </a-plane>
+            <a-plane position="16.45 2 0" width="3.25" height="2.5" rotation="0 90 0" material="color:black">
+                <a-plane src="#flashlight-diagram" position="0 0 0.1" width="4" height="3" scale="0.75 0.75 0.75"></a-plane>
+            </a-plane>
+
+            <!-- wires -->
+            <a-box id="green-wire-start" static-body position="8 4.3 19.5" scale="0.3 0.3 0.3" color="#7BC8A4"></a-box>
+            <a-entity id="green-spring" line="color: black"></a-entity>
+            <a-box position="8 1 19.5" scale="0.3 0.3 0.3" color="#7BC8A4">
+                <a-cylinder position="0 -2.2 0" scale="0.3 4 0.3" color="#7BC8A4"></a-cylinder>
+                <a-plane id="green-socket" class="socket" static-body collision-filter="collisionForces: false" position="0 0.51 0" rotation="-90 -90 90" width="1" height="1" color="white">
+                    <a-plane dynamic-body="mass: 0" position="0.2 0 -0.8" width="0.2" height="0.6"></a-plane>
+                    <a-plane dynamic-body="mass: 0" position="-0.2 0 -0.8" width="0.2" height="0.6"></a-plane>
+                    <a-plane position="0.2 0 0.01" width="0.2" height="0.6" color="black"></a-plane>
+                    <a-plane position="-0.2 0 0.01" width="0.2" height="0.6" color="black"></a-plane>
+                </a-plane>
+            </a-box>
+
+            <a-box id="red-wire-start" static-body position="10 4.3 19.5" scale="0.3 0.3 0.3" color="#EF2D5E"></a-box>
+            <a-entity id="red-spring" line="color: black"></a-entity>
+            <a-box position="10 1 19.5" scale="0.3 0.3 0.3" color="#EF2D5E">
+                <a-cylinder position="0 -2.2 0" scale="0.3 4 0.3" color="#EF2D5E"></a-cylinder>
+                <a-plane id="red-socket" class="socket" static-body collision-filter="collisionForces: false" position="0 0.51 0" rotation="-90 -90 90" width="1" height="1" color="white">
+                    <a-plane dynamic-body="mass: 0" position="0.2 0 -0.8" width="0.2" height="0.6"></a-plane>
+                    <a-plane dynamic-body="mass: 0" position="-0.2 0 -0.8" width="0.2" height="0.6"></a-plane>
+                    <a-plane position="0.2 0 0.01" width="0.2" height="0.6" color="black"></a-plane>
+                    <a-plane position="-0.2 0 0.01" width="0.2" height="0.6" color="black"></a-plane>
+                </a-plane>
+            </a-box>
+
+            <a-box id="blue-wire-start" static-body position="12 4.3 19.5" scale="0.3 0.3 0.3" color="#4CC3D9"></a-box>
+            <a-entity id="blue-spring" line="color: black"></a-entity>
+            <a-box position="12 1 19.5" scale="0.3 0.3 0.3" color="#4CC3D9">
+                <a-cylinder position="0 -2.2 0" scale="0.3 4 0.3" color="#4CC3D9"></a-cylinder>
+                <a-plane id="blue-socket" class="socket" static-body collision-filter="collisionForces: false" position="0 0.51 0" rotation="-90 -90 90" width="1" height="1" color="white">
+                    <a-plane dynamic-body="mass: 0" position="0.2 0 -0.8" width="0.2" height="0.6"></a-plane>
+                    <a-plane dynamic-body="mass: 0" position="-0.2 0 -0.8" width="0.2" height="0.6"></a-plane>
+                    <a-plane position="0.2 0 0.01" width="0.2" height="0.6" color="black"></a-plane>
+                    <a-plane position="-0.2 0 0.01" width="0.2" height="0.6" color="black"></a-plane>
+                </a-plane>
+            </a-box>
+
+            <a-box id="yellow-wire-start" static-body position="14 4.3 19.5" scale="0.3 0.3 0.3" color="#FFC65D"></a-box>
+            <a-entity id="yellow-spring" line="color: black"></a-entity>
+            <a-box position="14 1 19.5" scale="0.3 0.3 0.3" color="#FFC65D">
+                <a-cylinder position="0 -2.2 0" scale="0.3 4 0.3" color="#FFC65D"></a-cylinder>
+                <a-plane id="yellow-socket" class="socket" static-body collision-filter="collisionForces: false" position="0 0.51 0" rotation="-90 -90 90" width="1" height="1" color="white">
+                    <a-plane dynamic-body="mass: 0" position="0.2 0 -0.8" width="0.2" height="0.6"></a-plane>
+                    <a-plane dynamic-body="mass: 0" position="-0.2 0 -0.8" width="0.2" height="0.6"></a-plane>
+                    <a-plane position="0.2 0 0.01" width="0.2" height="0.6" color="black"></a-plane>
+                    <a-plane position="-0.2 0 0.01" width="0.2" height="0.6" color="black"></a-plane>
+                </a-plane>
+            </a-box>
+
+            <a-box open-door static-body position="4.6 2 16.25" scale="0.25 4 8" src="#door-texture"></a-box>
+          
+            <!-- ROBOT START -->
+
+            <!-- doors -->
+            <a-plane position="0 1.5 12" width="6.5" height="3.5" src="#door-texture"></a-plane>
+            <a-plane position="0 1.5 12" rotation="0 180 0" width="6.5" height="3.5" src="#door-texture"></a-plane>
+
+            <a-box id="doorOpenButton" grabbable static-body position="-3.5 1.5 12" geometry="depth:1; width:0.5; height:0.5" color="yellow" visible="false"></a-box>
+
+            <!-- upgrade station magnet -->
+            <a-box static-body position="-7.1 0.6 12.6" rotation="0 -90 0" height="1" width="0.5" depth="0.5" color="grey">
+                <a-plane upgrade="hand: robotRightHand" hoverable position="0 0.51 0" height="0.25" rotation="-90 90 0" width="0.25" src="#bot-hand-right" material="transparent: true">
+                    <a-plane position="-0.1 0 0" height="0" width="0.01" color="green"></a-plane>
+    
+                    <a-entity line="start: -0.105 -0.125 0; end: -0.105 0.125 0; color: white"
+                              line__2="start: -0.105 0.125 0; end: -0.095 0.125 0; color: white"
+                              line__3="start: -0.095 0.125 0; end: -0.095 -0.125 0; color: white"
+                              line__4="start: -0.095 -0.125 0; end: -0.105 -0.125 0; color: white"
+                    ></a-entity>
+                </a-plane>
+            </a-box>
+          
+            <a-plane position="-7.1 2.5 12.35" width="3.25" height="2.5" material="color:black">
+                <a-plane src="#magnet-diagram" position="0 0 0.1" width="4" height="3" scale="0.75 0.75 0.75"></a-plane>
+            </a-plane>
+
+            <!-- terminal -->
+            <a-gltf-model src="#terminal-1" position="-9.75 0 19.5" scale="0.01 0.01 0.01">
+                <!-- left button -->
+                <a-box hoverable button-press="direction: left" color="#006e9e" position="12 137 3" rotation="0 0 180" scale="20 25 5">
+                    <a-plane src="#arrow" position="0 0 -0.52" rotation="0 180 0" width="1" height="1"></a-plane>
+                </a-box>
+                <!-- right button -->
+                <a-box hoverable button-press="direction: right" color="#006e9e" position="-12 137 3" scale="20 25 5">
+                    <a-plane src="#arrow" position="0 0 -0.52" rotation="0 180 0" width="1" height="1"></a-plane>
+                </a-box>
+                <!-- outlet -->
+                <a-plane class="socket" static-body collision-filter="collisionForces: false" position="-300 115 -716" width="20" height="20" color="white">
+                    <a-plane dynamic-body="mass: 0" position="4 0 -20" width="4" height="12"></a-plane>
+                    <a-plane dynamic-body="mass: 0" position="-4 0 -20" width="4" height="12"></a-plane>
+                    <a-plane position="4 0 0.1" width="4" height="12" color="black"></a-plane>
+                    <a-plane position="-4 0 0.1" width="4" height="12" color="black"></a-plane>
+                </a-plane>
+            </a-gltf-model>
+
+            <!-- monitor -->
+            <a-gltf-model id="roomSlides" src="#monitor" networked="template: #monitorModel-template">
+                <a-box id="tv-wire-start" static-body position="-0.5 -1 1" scale="3 3 3" color="black"></a-box>
+                <a-entity id="tv-spring" line="color: black"></a-entity>
+            </a-gltf-model>
+        </a-gltf-model>
+
+        <!-- crack in glass -->
+        <a-entity
+            position="1.15 1.5 -24.5"
+            rotation="0 0 0"
+            class="target"
+            id="foamTarget"
+            target="healthPoints: 5; bulletType: ice"
+            geometry="primitive: box; depth: 0.1"
+            material="opacity: 0"
+            static-body
+        >
+            <a-entity hit-handler particle-system="preset: default; color: #ffffff,#000000; texture: https://cdn.glitch.com/2cd52535-6c95-44d8-a787-c4e6573a1734%2Fair.png?v=1623004537379; accelerationValue: 0 0 0; accelerationSpread: 10 10 0; velocityValue: 0 0 -10; velocitySpread: 7 7 3.5; maxAge: 1; size: 1; maxParticleCount: 1000; opacity: 0.25"></a-entity>
+            <a-plane rotation="0 0 20" material="color: #ffffff; opacity: 0.9" geometry="width:1; height: 0.01"></a-plane>
+            <a-plane rotation="0 0 -20" material="color: #ffffff; opacity: 0.9" geometry="width:0.4; height: 0.01"></a-plane>
+            <a-plane rotation="0 0 -10" material="color: #ffffff; opacity: 0.9" geometry="width:0.1; height: 0.01"></a-plane>
+            <a-plane rotation="0 0 10" material="color: #ffffff; opacity: 0.9" geometry="width:0.3; height: 0.01"></a-plane>
+            <a-plane rotation="0 0 -30" material="color: #ffffff; opacity: 0.9" geometry="width:0.2; height: 0.01"></a-plane>
+        </a-entity>
+    </a-entity>
+
+    <a-entity id="scene2" visible="false" networked="template: #map-template">
+        <a-gltf-model id="map2" src="#mapTwo" rotation="0 90 0" networked="template: #map-template">
+            <!-- walls -->
+            <a-box id="floor4" static-body position="5 0 -21.2" depth="10" height="0.5" width="40" material="opacity: 0"></a-box>
+            <a-box id="floor5" static-body position="0 0 -2" depth="28.5" height="0.5" width="8.5" material="opacity: 0"></a-box>
+            <a-box id="floor6" static-body position="5 0 -21.25" rotation="0 90 0" depth="40.5" height="0.5" width="10" material="opacity: 0"></a-box>
+            <a-box id="room3ceiling" static-body position="0 3.1 -2" depth="28.5" height="0.5" width="8.5" material="opacity: 0"></a-box>
+            <a-box id="room4ceiling" static-body position="5 5.25 -21.25" depth="10" height="0.5" width="40.5" material="opacity: 0"></a-box>
+            <a-box id="room3wall1" static-body position="-4.75 1.5 -2" depth="28.5" height="3" width="0.5" material="opacity: 0"></a-box>
+            <a-box id="room3wall2" static-body position="4.75 1.5 -2" depth="28.5" height="3" width="0.5" material="opacity: 0"></a-box>
+            <a-box id="room3miniwall1" static-body position="-4.4 0.25 -2" depth="28.5" height="1" width="1.1" material="opacity: 0"></a-box>
+            <a-box id="room3miniwall2" static-body position="4.3 0.25 -2" depth="28.5" height="1" width="1.1" material="opacity: 0"></a-box>
+            <a-box id="room3slant1" static-body position="-4 3.1 -2.5" depth="0.5" height="2" width="28.5" rotation="45 90 0" material="opacity: 0"></a-box>
+            <a-box id="room3slant2" static-body position="4 3.1 -2.5" depth="0.5" height="2" width="28.5" rotation="-45 90 0" material="opacity: 0"></a-box>
+            <a-box id="room4wall1" static-body position="5 3 -26" depth="0.5" height="6" width="40.5" material="opacity: 0"></a-box>
+            <a-box id="room4wall2" static-body position="-14.5 3 -21.25" depth="10.5" height="6" width="0.5" material="opacity: 0"></a-box>
+            <a-box id="room4wall3" static-body position="25 3 -21.25" depth="10.5" height="6" width="0.5" material="opacity: 0"></a-box>
+            <a-box id="room4wall4" static-body position="-9 3 -16.5" depth="0.5" height="6" width="12" material="opacity: 0"></a-box>
+            <a-box id="room4wall5" static-body position="14 3 -16.5" depth="0.5" height="6" width="22.5" material="opacity: 0"></a-box>
+            <a-box id="room4wall6" static-body position="0 4.6 -16.5" depth="0.5" height="3" width="10" material="opacity: 0"></a-box>
+
+            <!-- lights -->
+            <a-light type="point" intensity="0.75" distance="20" position="-0.1 4 -8">
+                <a-gltf-model src="#lamp-a" position="0 0.12 0" rotation="180 90 0"></a-gltf-model>
+            </a-light>
+            <a-light type="point" intensity="0.75" distance="20" position="-0.1 4 2">
+                <a-gltf-model src="#lamp-a" position="0 0.12 0" rotation="180 90 0"></a-gltf-model>
+            </a-light>
+            <a-light type="point" intensity="0.75" distance="20" position="14.9 5.75 -21.2">
+                <a-gltf-model src="#lamp-b" position="0 0.2 0" rotation="180 0 0"></a-gltf-model>
+            </a-light>
+            <a-light type="point" intensity="0.75" distance="20" position="4.9 5.75 -21.2">
+                <a-gltf-model src="#lamp-b" position="0 0.2 0" rotation="180 0 0"></a-gltf-model>
+            </a-light>
+            <a-light type="point" intensity="0.75" distance="20" position="-5.1 5.75 -21.2">
+                <a-gltf-model src="#lamp-b" position="0 0.2 0" rotation="180 0 0"></a-gltf-model>
+            </a-light>
+
+            <!-- corridor doors -->
+            <a-plane position="0 1.5 12" width="6.5" height="3.5" src="#door-texture"></a-plane>
+            <a-plane position="0 1.5 12" rotation="0 180 0" width="6.5" height="3.5" src="#door-texture"></a-plane>
+
+            <!-- obstacles -->
+            <a-box static-body position="-0.1 0.3 8" width="8.5" height="0.4" depth="0.4" material="opacity:0">
+                <a-gltf-model src="#pipe-a" scale="2.3 2.5 2.3" rotation="90 0 90"></a-gltf-model>
+            </a-box>
+            <a-box static-body position="-0.1 1.1 8" width="8.5" height="0.4" depth="0.4" material="opacity:0">
+                <a-gltf-model src="#pipe-a" scale="2.3 3.1 2.3" rotation="90 0 90"></a-gltf-model>
+            </a-box>
+            <a-box static-body position="-0.1 1.9 8" width="8.5" height="0.4" depth="0.4" material="opacity:0">
+                <a-gltf-model src="#pipe-a" scale="2.3 3.1 2.3" rotation="90 0 90"></a-gltf-model>
+            </a-box>
+            <a-box static-body position="-0.1 1.9 4.5" width="8.5" height="0.4" depth="0.4" material="opacity:0">
+                <a-gltf-model src="#pipe-a" scale="2.3 3.1 2.3" rotation="90 0 90"></a-gltf-model>
+            </a-box>
+            <a-box static-body position="-0.1 0.3 4.5" width="8.5" height="0.4" depth="0.4" material="opacity:0">
+                <a-gltf-model src="#pipe-a" scale="2.3 2.5 2.3" rotation="90 0 90"></a-gltf-model>
+            </a-box>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="-0.7 3.0 4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="-1.5 3.0 4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="-2.3 3.0 4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="-3.1 3.0 4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="-3.9 2.5 4.5" scale="1.5 0.5 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="0.1 3.0 4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="0.9 3.0 4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="1.7 3.0 4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="2.5 3.0 4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="3.3 2.8 4.5" scale="1.5 0.5 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="4.1 2.4 4.5" scale="1.5 0.3 1.5" rotation="0 90 0"></a-entity>
+
+            <a-box static-body position="-0.1 0.3 0" width="8.5" height="0.4" depth="0.4" material="opacity: 0">
+                <a-gltf-model src="#pipe-a" scale="2.3 2.5 2.3" rotation="90 0 90"></a-gltf-model>
+            </a-box>
+            <a-box static-body position="-0.1 1.1 0" width="8.5" height="0.4" depth="0.4" material="opacity: 0">
+                <a-gltf-model src="#pipe-a" scale="2.3 3.1 2.3" rotation="90 0 90"></a-gltf-model>
+            </a-box>
+            <a-box static-body position="-0.1 1.9 0" width="8.5" height="0.4" depth="0.4" material="opacity: 0">
+                <a-gltf-model src="#pipe-a" scale="2.3 3.1 2.3" rotation="90 0 90"></a-gltf-model>
+            </a-box>
+            <a-box static-body position="-0.1 1.9 -4.5" width="8.5" height="0.4" depth="0.4" material="opacity: 0">
+                <a-gltf-model src="#pipe-a" scale="2.3 3.1 2.3" rotation="90 0 90"></a-gltf-model>
+            </a-box>
+            <a-box static-body position="-0.1 1.1 -4.5" width="8.5" height="0.4" depth="0.4" material="opacity: 0">
+                <a-gltf-model src="#pipe-a" scale="2.3 3.1 2.3" rotation="90 0 90"></a-gltf-model>
+            </a-box>
+            <a-box static-body position="-0.1 0.3 -4.5" width="8.5" height="0.4" depth="0.4" material="opacity: 0">
+                <a-gltf-model src="#pipe-a" scale="2.3 2.5 2.3" rotation="90 0 90"></a-gltf-model>
+            </a-box>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="-0.7 3.0 -4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="-1.5 3.0 -4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="-2.3 3.0 -4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="-3.1 3.0 -4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="-3.9 2.5 -4.5" scale="1.5 0.5 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="0.1 3.0 -4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="0.9 3.0 -4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>
+            <a-entity gltf-model="#pipe-a" body="type: static; mass: 0; shape: none;" shape__main="shape:cylinder; height: 2.7; radiusTop: 0.2; radiusBottom: 0.2;" position="1.7 3.0 -4.5" scale="1.5 0.7 1.5" rotation="0 90 0"></a-entity>      
+
+            <a-box static-body position="-2 0 -10" width="3.2" height="6" depth="0.5" material="opacity:0">
+                <a-gltf-model src="#door-a" position="0 3 0" scale="1 1 1" rotation="180 0 0"></a-gltf-model>
+            </a-box>
+            <a-box static-body position="2 0 -11.5" width="3.2" height="6" depth="0.5" material="opacity:0">
+                <a-gltf-model src="#door-a" position="0 3 0" scale="1 1 1" rotation="180 0 0"></a-gltf-model>
+            </a-box>
+
+            <a-box id="doorOpenButton2" grabbable change-scene static-body position="3.5 1.5 -16" geometry="depth:0.5; width:0.5; height:0.5" color="yellow"></a-box>
+            <a-plane position="0 1.5 -16" width="6.5" height="3.5" src="#door-texture"></a-plane>
+            <a-box rotation="0 90 0" position="0 2 -16.15" depth="9" height="5" width="0.3" material="opacity:0" static-body></a-box>
+            <a-plane position="0 1.5 -16.3" rotation="0 180 0" width="6.5" height="3.5" src="#door-texture"></a-plane>
+
+            <!-- diagrams -->
+            <a-plane position="22.35 3 -25.75" width="3.25" height="2.5" material="color: black">
+                <a-plane src="#fire-beam-diagram" position="0 0 0.1" width="4" height="3" scale="0.75 0.75 0.75"></a-plane>
+            </a-plane>
+          
+            <a-plane position="-5 2.8 -16.5" width="3.25" rotation="0 180 0" height="2.5" material="color: black">
+                <a-plane src="#freeze-diagram" position="0 0 0.1" width="4" height="3" scale="0.75 0.75 0.75"></a-plane>
+            </a-plane>
+          
+            <a-plane position="-10.1 3 -25.75" width="3.25" height="2.5" material="color: black">
+                <a-plane src="#laser-diagram" position="0 0 0.1" width="4" height="3" scale="0.75 0.75 0.75"></a-plane>
+            </a-plane>
+          
+            <!-- terminal display of power levels -->
+            <a-gltf-model id="powerLevelDisplay" position="-0.15 1 -25.75" scale="0.075 0.075 0.075" src="#monitor">
+                <a-plane id="powerDisplay" position="0 18.5 2.2" src="#no_power" width="60" height="30"></a-plane>
+            </a-gltf-model>
+
+            <a-cylinder class="batteryOneWire" position="-0.5 0.6 -25.7" height="1.1" radius="0.05" material="color: red"></a-cylinder>
+            <a-cylinder class="batteryOneWire" position="-1.1 0.12 -25.7" rotation="0 0 90" height="1.2" radius="0.05" material="color: red"></a-cylinder>
+            <a-cylinder class="batteryTwoWire" position="0.3 0.6 -25.7" height="1.1" radius="0.05" material="color: red"></a-cylinder>
+            <a-cylinder class="batteryTwoWire" position="0.9 0.12 -25.7" rotation="0 0 90" height="1.2" radius="0.05" material="color: red"></a-cylinder>
+
+            <a-box class="battery-holder" id="holder1" battery-plug static-body position="-1.9 0.6 -25.5" height="1" depth="0.1" width="0.75">
+                <a-box position="0 0.45 0.25" height="0.1" depth="0.4" width="0.75"></a-box>
+                <a-box position="0 -0.45 0.25" height="0.1" depth="0.4" width="0.75"></a-box>
+                <a-box position="0.325 0 0.25" height="1" depth="0.4" width="0.1"></a-box>
+                <a-box position="-0.325 0 0.25" height="1" depth="0.4" width="0.1"></a-box>
+            </a-box>
+          
+            <a-box class="battery-holder" id="holder2" battery-plug static-body position="1.7 0.6 -25.5" height="1" depth="0.1" width="0.75">
+                <a-box position="0 0.45 0.25" height="0.1" depth="0.4" width="0.75"></a-box>
+                <a-box position="0 -0.45 0.25" height="0.1" depth="0.4" width="0.75"></a-box>
+                <a-box position="0.325 0 0.25" height="1" depth="0.4" width="0.1"></a-box>
+                <a-box position="-0.325 0 0.25" height="1" depth="0.4" width="0.1"></a-box>
+            </a-box>
+
+            <!-- water -->
+            <a-ocean id="ocean1" freeze-melt target="healthPoints: 1; bulletType: ice" width="2" depth="10" density="10" amplitude="0.001" amplitudeVariance="0.1" speed="0.2" speedVariance="0.5" material="color: #7AD2F7; opacity: 0.8" position="-5 0.35 -21.3">
+                <a-box class="ice" respawn-robot dynamic-body="mass: 0" position="0 0 -0.1" height="10" width="2" depth="0.1" color="#7AD2F7" material="opacity: 0"></a-box>
+            </a-ocean>
+            <a-gltf-model src="#pipe-b" static-body position="-5 1.25 -16.85" rotation="0 -90 0" scale="1.5 1.5 1.5">
+                <a-cylinder color="#7AD2F7" material="opacity: 0.8" height="0.5" radius="0.1" position="0 -0.55 0"></a-cylinder>
+            </a-gltf-model>
+          
+            <a-ocean id="ocean2" freeze-melt target="healthPoints: 1; bulletType: ice" width="12" depth="2" density="10" amplitude="0.001" amplitudeVariance="0.1" speed="0.2" speedVariance="0.5" material="color: #7AD2F7; opacity: 0.8" position="-9.7 0.35 -22.5" rotation="-90 25 0">
+                <a-box class="ice" respawn-robot dynamic-body="mass: 0" position="0 0 -0.1" height="2" width="12" depth="0.1" color="#7AD2F7" material="opacity: 0"></a-box>
+            </a-ocean>
+            <a-gltf-model src="#pipe-b" static-body position="-14.35 1.25 -20.5" rotation="0 180 0" scale="1.5 1.5 1.5">
+                <a-cylinder color="#7AD2F7" material="opacity: 0.8" height="0.5" radius="0.1" position="0 -0.55 0"></a-cylinder>
+            </a-gltf-model>
+          
+            <!-- fire syringe pedestal -->
+            <a-box id="fire-pedestal" static-body position="22.35 0.5 -23.7" height="1" width="0.5" depth="0.5" color="#EE8130"></a-box>
+
+            <!-- laser upgrade station -->
+            <a-box static-body position="-10.1 0.5 -25.5" height="1" width="0.5" depth="0.5" color="grey" rotation="0 -90 0">
+                <a-plane upgrade="hand: robotLeftHand" hoverable position="0 0.51 0" height="0.25" rotation="-90 90 0" width="0.25" src="#bot-hand-left" material="transparent: true">
+                    <a-plane position="-0.1 0 0" height="0" width="0.01" color="green"></a-plane>
+
+                    <a-entity line="start: -0.105 -0.125 0; end: -0.105 0.125 0; color: white"
+                              line__2="start: -0.105 0.125 0; end: -0.095 0.125 0; color: white"
+                              line__3="start: -0.095 0.125 0; end: -0.095 -0.125 0; color: white"
+                              line__4="start: -0.095 -0.125 0; end: -0.105 -0.125 0; color: white"
+                    ></a-entity>
+                </a-plane>
+            </a-box>
+
+            <!-- maze -->
+            <a-gltf-model static-body src="#door-a" position="4 0 -24" scale="1.2 1 1" rotation="0 90 0"></a-gltf-model>
+            <a-gltf-model static-body src="#door-a" position="4 0 -18" scale="1.2 1 1" rotation="0 90 0"></a-gltf-model>
+            <a-gltf-model static-body src="#door-a" position="7 0 -22.4" scale="2.4 1 1" rotation="0 90 0"></a-gltf-model>
+            <a-gltf-model static-body src="#door-a" position="10 0 -21.6" scale="1.2 1 1" rotation="0 90 0"></a-gltf-model>
+            <a-gltf-model static-body src="#door-a" position="10 0 -18" scale="1.2 1 1" rotation="0 90 0"></a-gltf-model>
+            <a-gltf-model static-body src="#door-a" position="13.6 0 -21.2" scale="1.5 1 1" rotation="0 270 0"></a-gltf-model>
+            <a-box static-body position="15.5 1.5 -23.15" width="4" height="3" depth="0.5" material="opacity:0">
+                <a-gltf-model src="#door-a" position="0 -1.5 0" scale="1.2 1 1" rotation="0 0 0"></a-gltf-model>
+            </a-box>
+            <a-box static-body position="17 1.5 -19.15" width="6" height="3" depth="0.5" material="opacity:0">
+                <a-gltf-model src="#door-a" position="0 -1.5 0" scale="2 1 1" rotation="0 0 0"></a-gltf-model>
+            </a-box>
+            <a-gltf-model static-body src="#door-a" position="20 0 -22.4" scale="2.4 1 1" rotation="0 90 0"></a-gltf-model>
+
+            <!-- fence doorways -->
+            <a-gltf-model id="doorway1" position="10 0 -24.5" rotation="0 180 0" networked="template: #doorway-template"></a-gltf-model>
+            <a-gltf-model id="doorway2" position="14 0 -17.9" rotation="0 180 0" networked="template: #doorway-template"></a-gltf-model>
+            <a-gltf-model id="doorway3" position="20 0 -17.9" rotation="0 180 0" networked="template: #doorway-template"></a-gltf-model>
+        </a-gltf-model>
+
+        <!-- ice block -->
+        <a-entity id="iceBlock" position="-21.2, 1, -15.25" melt-ice-block target="healthPoints: 1; bulletType: fire" geometry="primitive: box;" material="opacity: 0.7; color: #8ceeff" scale="3.75 2.5 0.5">
+          <a-box static-body scale="1 1 2" visible="false"></a-box>
+        </a-entity>
+    </a-entity>
+</a-scene>
+<script src="./scripts/naf-schemas.js"></script>
+<script>
+    document.body.addEventListener('ownership-lost', (e) => {
+        e.detail.el.removeAttribute('dynamic-body');
+    });
+</script>
+</body>
+</html>
